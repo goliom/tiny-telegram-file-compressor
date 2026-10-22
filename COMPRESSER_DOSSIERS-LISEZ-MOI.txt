@@ -1,5 +1,11 @@
 TINY TELEGRAM FILE COMPRESSOR
 ============================
+VERSION WINDOWS EXECUTABLE
+Le ZIP Windows de la release v1.0.0 contient TinyTelegramFileCompressor.exe.
+Extrayez ce ZIP et lancez l'executable. Python est embarque ; 7-Zip reste
+a installer separement. Les instructions ci-dessous decrivent aussi la
+version source du programme.
+
 1. Double-cliquez "Tiny Telegram File Compressor.bat".
    L'ancien lanceur COMPRESSER_DOSSIERS.bat fonctionne aussi.
    L'icone combine l'avion Telegram et un badge 7z. Le dossier assets doit

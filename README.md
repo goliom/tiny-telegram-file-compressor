@@ -26,13 +26,24 @@ The program prepares files locally. Send the resulting parts through your Telegr
 
 ## Requirements
 
-- **Windows** with a desktop session.
-- **Python 3.12 or newer**, including Tkinter/Tcl/Tk. Use the Windows installer from [python.org](https://www.python.org/downloads/windows/) and include the Tcl/Tk component.
+- **Windows x64** with a desktop session for the executable.
 - **7-Zip**, installed separately from [7-zip.org](https://www.7-zip.org/). The app checks `PATH` and the standard Windows installation folders.
+- **For running from source only:** Python 3.12 or newer, including Tkinter/Tcl/Tk. Use the Windows installer from [python.org](https://www.python.org/downloads/windows/) and include the Tcl/Tk component.
 
-There are **no third-party Python packages to install**. Python's standard library provides the interface and the application logic. 7-Zip is an external program and is not bundled.
+The Windows executable includes Python and Tk; users do not need a Python installation. Running from source needs no third-party Python packages. 7-Zip is an external program and is not bundled.
 
 ## Getting started
+
+### Windows executable
+
+1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.0.0-windows-x64.zip` when available.
+2. Extract the ZIP and install 7-Zip if needed.
+3. Run `TinyTelegramFileCompressor.exe`.
+4. Select a language from the top-right menu. The initial interface is French.
+
+The executable is unsigned. The ZIP includes quick-start instructions and runtime license notices.
+
+### Run from source
 
 1. Download this repository using **Code → Download ZIP**, then extract the downloaded ZIP completely.
 2. Install Python and 7-Zip if needed.
@@ -142,7 +153,9 @@ py -3 -m unittest discover -s tests -p "test_*.py"
 
 GUI tests create temporary Tk windows and require a desktop session. Tests use temporary sample folders under the repository and clean them up afterwards.
 
-The included GitHub Actions workflow runs Windows tests with Python 3.12 and 3.14. The workflow still needs its first run after publication; local testing does not confirm GitHub-hosted results.
+The included test workflow runs Windows tests with Python 3.12 and 3.14.
+The separate **Build Windows release** workflow can be started manually to produce and verify the executable.
+See [BUILDING.md](BUILDING.md) for local builds and release assets.
 
 ## Notes
 

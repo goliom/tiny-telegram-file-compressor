@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from app_identity import APP_NAME, apply_identity, configure_app_id
+from app_identity import APP_NAME, APP_VERSION, apply_identity, configure_app_id
 from compression_i18n import LANGUAGES, text
 from compression_gui import CompressionPanel
 from decompression_gui import ExtractionPanel
@@ -32,6 +32,7 @@ class DesktopApp:
                                  command=lambda chosen=code: self.change_language(chosen))
         self.language_button.configure(menu=menu)
         ttk.Label(header, text=APP_NAME, font=('Segoe UI', 15, 'bold')).pack(side='left')
+        ttk.Label(header, text='v' + APP_VERSION).pack(side='left', padx=(8, 0))
         self.description = ttk.Label(shell, text=text('heading'), wraplength=900)
         self.description.pack(fill='x', pady=(4, 8))
         shell.bind('<Configure>', lambda event: self.description.configure(wraplength=max(500, event.width - 24)))

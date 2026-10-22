@@ -1,6 +1,13 @@
 """Locate 7-Zip without requiring a browser or Playwright."""
 import shutil
+import os
+import subprocess
 from pathlib import Path
+
+
+def subprocess_options():
+    """Keep external 7-Zip windows hidden when launched from the desktop app."""
+    return {'creationflags': subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {}
 
 
 def seven_zip():

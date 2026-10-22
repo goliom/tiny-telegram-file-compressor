@@ -5,6 +5,7 @@ __pycache__/
 .coverage
 htmlcov/
 .venv/
+.venv-build/
 venv/
 
 # Editors and OS files
@@ -39,3 +40,4 @@ decompression-erreurs.txt
 tmp*/
 dist/
 build/
+*.spec

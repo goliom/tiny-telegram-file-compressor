@@ -5,6 +5,7 @@ import codecs
 import re
 import sys
 import threading
+from archive_tools import subprocess_options
 
 
 def run_sevenzip(arguments, label, heartbeat=15, cwd=None, on_progress=None):
@@ -15,7 +16,7 @@ def run_sevenzip(arguments, label, heartbeat=15, cwd=None, on_progress=None):
     switches = ['-bsp1', '-bso0'] + (['-sccUTF-8'] if on_progress else [])
     command = [*arguments[:insertion], *switches, *arguments[insertion:]]
     capture = {'stdout': subprocess.PIPE, 'stderr': subprocess.STDOUT} if on_progress else {}
-    process = subprocess.Popen(command, stdin=subprocess.DEVNULL, cwd=cwd, **capture)
+    process = subprocess.Popen(command, stdin=subprocess.DEVNULL, cwd=cwd, **capture, **subprocess_options())
     reader = None
     reader_errors = []
     if on_progress:
@@ -26,12 +27,14 @@ def run_sevenzip(arguments, label, heartbeat=15, cwd=None, on_progress=None):
             try:
                 while chunk := process.stdout.read1(4096):
                     text = decoder.decode(chunk)
-                    try:
-                        sys.stdout.write(text)
-                    except UnicodeEncodeError:
-                        encoding = getattr(sys.stdout, 'encoding', None) or 'utf-8'
-                        sys.stdout.write(text.encode(encoding, errors='replace').decode(encoding))
-                    sys.stdout.flush()
+                    stream = sys.stdout
+                    if stream is not None:
+                        try:
+                            stream.write(text)
+                        except UnicodeEncodeError:
+                            encoding = getattr(stream, 'encoding', None) or 'utf-8'
+                            stream.write(text.encode(encoding, errors='replace').decode(encoding))
+                        stream.flush()
                     buffer += text
                     # 7-Zip refreshes the same console line with backspaces/CR.
                     for match in re.finditer(r'(?:^|[\r\n\b])\s*(\d{1,3})%(?=\s|$)', buffer):

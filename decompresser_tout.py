@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from archive_layout import is_link, named_payload, publish_extraction, remove_empty_wrappers
-from archive_tools import seven_zip
+from archive_tools import seven_zip, subprocess_options
 from sevenzip_runner import run_sevenzip
 
 JOURNAL = ".decompression-tout.json"
@@ -180,7 +180,7 @@ def extract_one(archive, root, executable, journal, delete_archives=True, on_pro
         print("Lecture des en-têtes du jeu de volumes :", archive.first, flush=True)
         listing = subprocess.run([executable, "l", "-slt", "-sccUTF-8", str(archive.first)],
                                  stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                 encoding="utf-8", errors="replace", timeout=60, check=True)
+                                 encoding="utf-8", errors="replace", timeout=60, check=True, **subprocess_options())
         header = listing.stdout.split("----------", 1)[0]
         counts = [int(value) for value in re.findall(r"^Volumes = (\d+)\s*$", header, re.M)]
         if not counts or max(counts) != len(archive.volumes):

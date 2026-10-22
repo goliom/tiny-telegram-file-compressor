@@ -7,7 +7,13 @@ No 7-Zip executable or source code is included in this repository. See the [upst
 
 ## Python and Tk
 
-Python and Tkinter/Tcl/Tk are installed separately. Their interpreters, libraries and installers are not bundled in this repository.
+When running the source code, Python and Tkinter/Tcl/Tk are installed separately. Their interpreters and installers are not stored in this source repository.
+
+The compiled Windows executable includes the Python and Tcl/Tk runtime. Its recommended Windows ZIP includes copies of their license texts in `licenses/`.
+
+## PyInstaller
+
+Windows executables are produced with [PyInstaller](https://pyinstaller.org/). The build tool is a development dependency, and its bootloader is included in the executable. The Windows ZIP includes the PyInstaller license and bootloader exception in `licenses/PyInstaller-COPYING.txt`.
 
 ## Telegram and application icon
 

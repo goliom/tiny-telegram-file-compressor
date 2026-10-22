@@ -62,6 +62,15 @@ for chunk in [b'  0%', b' file\\n\\b\\b 3', b'7% file\\n', b'\\b\\b 82% file\\n'
                 run_sevenzip([sys.executable, str(script)], 'Progression', on_progress=values.append)
             self.assertEqual(values, [37])
 
+    def test_windowed_application_with_no_stdout_still_reports_progress(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1]) as temp:
+            script = Path(temp) / 'windowed_fixture.py'
+            script.write_text("import sys\nsys.stdout.buffer.write(b' 25% file\\n');sys.stdout.flush()\n", encoding='utf-8')
+            values = []
+            with patch('sys.stdout', None):
+                run_sevenzip([sys.executable, str(script)], 'Windowed', on_progress=values.append)
+            self.assertEqual(values, [25, 100])
+
 
 if __name__ == '__main__':
     unittest.main()

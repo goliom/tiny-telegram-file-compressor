@@ -1,6 +1,14 @@
 # Changelog
 
-## Initial public source package
+## 1.0.0
+
+- Windows x64 executable with embedded Python/Tk, application icon and version information.
+- Windowed-mode handling and hidden 7-Zip subprocess windows.
+- Verified binary smoke test covering the GUI, languages, compression, extraction and cleanup.
+- Versioned Windows/source ZIPs, runtime licenses, build metadata and SHA-256 checksums.
+- Manual GitHub Actions build workflow and English release notes.
+
+### Initial application features
 
 - Independent Windows application with Compress and Extract tabs.
 - Separate multipart 7z archive sets, limited to 2,000 MB per part, using Normal compression.

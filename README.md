@@ -8,6 +8,12 @@ A Windows desktop utility for preparing files to share on Telegram. Choose folde
 
 Interface languages: **English, Français, Español, Italiano, Deutsch, Nederlands**.
 
+## Downloads
+
+Get the executable and source code from [GitHub Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases/latest).
+
+Windows releases are currently unsigned. We are preparing an application to the **SignPath Foundation** open-source signing program; acceptance and signing are not yet in place. See our [Code signing policy](CODE_SIGNING.md) and [Privacy policy](PRIVACY.md).
+
 ## Preview
 
 ![Compression in progress with folder selection, progress bars and estimated remaining time. Personal folder names and paths are hidden.](assets/screenshot-compression.png)

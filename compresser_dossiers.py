@@ -9,7 +9,7 @@ from archive_tools import seven_zip
 from compression_i18n import text
 from sevenzip_runner import run_sevenzip
 
-VOLUME_BYTES = 2000 * 1000**2  # 2,000 decimal MB, passed to 7-Zip as exact bytes.
+VOLUME_BYTES = 2 * 1000**3  # 2 decimal GB, passed to 7-Zip as exact bytes.
 
 
 def existing_archives(destination, name):
@@ -67,9 +67,10 @@ def compress_folder(source, destination, executable, volume_bytes=VOLUME_BYTES, 
     if existing_archives(destination, source.name):
         raise FileExistsError(text('archive_appeared', language))
     published = []
+    single_archive = len(volumes) == 1 and volumes[0][1].stat().st_size < volume_bytes
     try:
         for number, path in volumes:
-            target = destination / path.name
+            target = destination / (archive.name if single_archive else path.name)
             # Check both resolved absolute paths before moving any directory/file.
             if not path.resolve().is_relative_to(staging.resolve()) or not target.resolve().is_relative_to(destination):
                 raise RuntimeError(text('publication_outside', language))
@@ -78,20 +79,19 @@ def compress_folder(source, destination, executable, volume_bytes=VOLUME_BYTES, 
             else:
                 os.link(path, target)
                 path.unlink()
-            published.append(target)
+            published.append((path, target))
         staging.rmdir()
     except Exception:
         # Restore the complete staging set if publishing any volume failed.
-        for number, path in volumes:
-            target = destination / path.name
-            if not path.exists() and target in published and target.exists():
+        for path, target in reversed(published):
+            if not path.exists() and target.exists():
                 if os.name == 'nt':
                     target.rename(path)
                 else:
                     os.link(target, path)
                     target.unlink()
         raise
-    return published
+    return [target for path, target in published]
 
 
 def launch_gui():
@@ -100,7 +100,7 @@ def launch_gui():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Une archive 7z par dossier, compression Normale, en volumes de 2 000 MB maximum.')
+    parser = argparse.ArgumentParser(description='Une archive 7z par dossier, compression Normale, en volumes de 2 GB maximum.')
     parser.add_argument('dossiers', nargs='*')
     parser.add_argument('--destination')
     parser.add_argument('--apercu', action='store_true')
@@ -113,7 +113,7 @@ def main():
         parser.error('Indiquez --destination si les dossiers ont des parents différents.')
     destination = Path(args.destination).expanduser().resolve() if args.destination else sources[0].parent
     for source in sources:
-        print(f'{source} -> {destination / (source.name + ".7z.001")} (2 000 MB maximum par volume, compression Normale)')
+        print(f'{source} -> {destination / (source.name + ".7z")} (2 GB maximum par volume, .001/.002 si nécessaire, compression Normale)')
     if args.apercu:
         return 0
     errors = 0

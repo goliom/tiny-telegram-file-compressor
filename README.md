@@ -2,11 +2,11 @@
 
 # Tiny Telegram File Compressor
 
-**Compress folders into separate multipart 7z archives, with a 2,000 MB limit per part, or extract archives recursively.**
+**Compress folders into separate multipart 7z archives, with a 2 GB limit per part, or extract archives recursively.**
 
 A Windows desktop utility for preparing files to share on Telegram. Choose folders from different drives, follow progress and estimated remaining time, and extract ZIP, RAR and 7z collections from a single interface.
 
-Interface languages: **English, Français, Español, Italiano**.
+Interface languages: **English, Français, Español, Italiano, Deutsch, Nederlands**.
 
 ## Preview
 
@@ -15,7 +15,8 @@ Interface languages: **English, Français, Español, Italiano**.
 ## Features
 
 - One independent 7z archive set per selected folder, including all its contents and subfolders.
-- Parts limited to **2,000,000,000 bytes** each: decimal MB, not MiB. Compression is fixed to **Normal**.
+- Parts limited to **2 GB (2,000,000,000 bytes)** each: decimal GB, not GiB. Compression is fixed to **Normal**.
+- A single volume smaller than 2 GB is saved as `.7z`; multipart archives use `.7z.001`, `.7z.002`, etc.
 - Add folders from different drives or add all direct subfolders of a parent folder.
 - Checkbox list with folder names, locations, sizes and processing status.
 - Separate **Compress** and **Extract** tabs, each organized into three steps.
@@ -40,7 +41,7 @@ The Windows executable includes Python and Tk; users do not need a Python instal
 
 ### Windows executable
 
-1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.0.0-windows-x64.zip` when available.
+1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.1.0-windows-x64.zip`.
 2. Extract the ZIP and install 7-Zip if needed.
 3. Run `TinyTelegramFileCompressor.exe`.
 4. Select a language from the top-right menu. The initial interface is French.
@@ -73,10 +74,10 @@ Each source gets its own archive set. Selecting `Collection A` and `Collection B
 ```text
 Collection A.7z.001
 Collection A.7z.002
-Collection B.7z.001
+Collection B.7z
 ```
 
-A small archive still uses the `.7z.001` name. The last part is smaller when necessary. Keep all parts together and open `.7z.001` with 7-Zip to extract the set.
+A single volume smaller than 2 GB uses the `.7z` extension and opens directly with 7-Zip. Larger archives are split into numbered parts; the last part is smaller when necessary. Keep all parts together and open `.7z.001` with 7-Zip to extract the set. A single volume exactly 2 GB keeps its numbered name.
 
 The source folder itself is included in its archive. Two selected folders with the same name must be renamed or processed separately into different destinations.
 
@@ -164,7 +165,7 @@ See [BUILDING.md](BUILDING.md) for local builds and release assets.
 ## Notes
 
 - The application currently targets Windows; other platforms are not supported by the launcher, folder-opening code or extraction lock.
-- The GUI is translated into four languages. Some console output and detailed backend errors remain French; Windows dialogs and 7-Zip may use their own language.
+- The GUI is translated into six languages. Some console output and detailed backend errors remain French; Windows dialogs and 7-Zip may use their own language.
 - The icon is an AI-generated combination of a Telegram-style paper airplane and a `7z` badge. This is an independent tool, not an official Telegram or 7-Zip product. See [assets/README.txt](assets/README.txt).
 
 ## License

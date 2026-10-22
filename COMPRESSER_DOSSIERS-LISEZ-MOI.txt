@@ -1,7 +1,7 @@
 TINY TELEGRAM FILE COMPRESSOR
 ============================
 VERSION WINDOWS EXECUTABLE
-Le ZIP Windows de la release v1.0.0 contient TinyTelegramFileCompressor.exe.
+Le ZIP Windows de la release v1.1.0 contient TinyTelegramFileCompressor.exe.
 Extrayez ce ZIP et lancez l'executable. Python est embarque ; 7-Zip reste
 a installer separement. Les instructions ci-dessous decrivent aussi la
 version source du programme.
@@ -10,7 +10,7 @@ version source du programme.
    L'ancien lanceur COMPRESSER_DOSSIERS.bat fonctionne aussi.
    L'icone combine l'avion Telegram et un badge 7z. Le dossier assets doit
    rester a cote des fichiers Python pour afficher l'icone dans les fenetres.
-   Le menu de langue en haut propose Francais, English, Espanol et Italiano.
+   Le menu propose Francais, English, Espanol, Italiano, Deutsch et Nederlands.
    Cliquez sur le nom de la langue actuelle pour choisir une autre langue.
    Le changement est possible pendant une compression,
    sans modifier les dossiers, la selection, la destination ou la progression.
@@ -41,17 +41,18 @@ version source du programme.
 EXEMPLE DE RESULTAT
 Collection - 2026-05.7z.001
 Collection - 2026-05.7z.002
-Collection - 2026-06.7z.001
+Collection - 2026-06.7z
 Collection - 2026-07.7z.001
 Collection - 2026-07.7z.002
 Collection - 2026-07.7z.003
 Chaque jeu correspond a UN dossier source, independamment des autres jeux.
-Un petit dossier ne produit qu'un fichier .7z.001. Le dernier volume est plus
-petit si necessaire. Le dossier source lui-meme est inclus dans son archive.
+Un seul volume de moins de 2 GB devient un fichier .7z. Les archives decoupees
+gardent .7z.001, .002, etc. Un seul volume de 2 GB exactement garde .7z.001.
+Le dernier volume est plus petit si necessaire. Le dossier source est inclus.
 
 TAILLE ET COMPRESSION
-Maximum par fichier : 2 000 MB = 2 000 000 000 octets.
-Il s'agit de MB decimaux (base 1000), pas de Mio (base 1024).
+Maximum par fichier : 2 GB = 2 000 000 000 octets.
+Il s'agit de GB decimaux (base 1000), pas de Gio (base 1024).
 Compression fixee a Normale (niveau 5), sans option a choisir.
 La fenetre affiche deux barres : le pourcentage 7-Zip du dossier en cours et
 l'avancement total. Les barres avancent pendant la compression,
@@ -87,6 +88,7 @@ provisoire pour controle ; deplacez-le avant de reessayer.
 Les dossiers contenant des liens symboliques ou jonctions sont refuses.
 Pas de seconde passe de verification systematique : les sources sont conservees.
 
+Une archive unique .7z s'ouvre directement avec 7-Zip.
 Pour extraire un jeu, ouvrez le fichier .7z.001 avec 7-Zip en laissant toutes
 les parties dans le meme dossier. Python et 7-Zip sont necessaires ; aucun
 navigateur ou Playwright n'est requis.

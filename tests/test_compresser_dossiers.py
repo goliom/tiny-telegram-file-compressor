@@ -27,7 +27,7 @@ class CompressionTest(unittest.TestCase):
         (folder / 'sub/piece.bin').write_bytes(os.urandom(size))
         return folder
 
-    def test_exact_2000_mb_limit(self):
+    def test_exact_2_gb_limit(self):
         self.assertEqual(VOLUME_BYTES, 2_000_000_000)
 
     def test_four_selected_folders_produce_four_independent_split_archives(self):
@@ -45,14 +45,19 @@ class CompressionTest(unittest.TestCase):
             self.assertEqual((source / 'sub/piece.bin').read_bytes(), original)
         self.assertFalse(any(self.output.glob(sources[4].name + '.7z*')))
 
-    def test_small_folder_still_produces_one_numbered_volume(self):
+    def test_small_folder_produces_readable_unnumbered_archive(self):
         source = self.source(size=16)
         values = []
         with patch('compresser_dossiers.run_sevenzip', wraps=run_sevenzip) as runner:
             volumes = compress_folder(source, self.output, self.executable, on_progress=values.append)
         self.assertIn('-mx=5', runner.call_args.args[0])
         self.assertIn('-v2000000000b', runner.call_args.args[0])
-        self.assertEqual([path.name for path in volumes], [source.name + '.7z.001'])
+        self.assertEqual([path.name for path in volumes], [source.name + '.7z'])
+        restored = self.root / 'restored-single'
+        subprocess.run([self.executable, 'x', '-y', '-bso0', f'-o{restored}', str(volumes[0])],
+                       check=True, stdout=subprocess.DEVNULL)
+        self.assertEqual((restored / source.name / 'sub/piece.bin').read_bytes(),
+                         (source / 'sub/piece.bin').read_bytes())
         self.assertTrue(source.is_dir())
         self.assertTrue(values)
         self.assertEqual(values[-1], 100)
@@ -66,6 +71,40 @@ class CompressionTest(unittest.TestCase):
             compress_folder(source, self.output, self.executable)
         self.assertEqual(existing.read_bytes(), b'keep existing archive')
         self.assertFalse((self.output / (source.name + '.compression-en-cours')).exists())
+
+    def test_existing_unnumbered_archive_is_preserved(self):
+        source = self.source(size=16)
+        self.output.mkdir()
+        existing = self.output / (source.name + '.7z')
+        existing.write_bytes(b'keep unnumbered archive')
+        with self.assertRaises(FileExistsError):
+            compress_folder(source, self.output, self.executable)
+        self.assertEqual(existing.read_bytes(), b'keep unnumbered archive')
+        self.assertFalse((self.output / (source.name + '.compression-en-cours')).exists())
+
+    def test_single_volume_at_exact_limit_keeps_numbered_name(self):
+        source = self.source(size=16)
+        def exact_limit(arguments, label, **kwargs):
+            archive = next(Path(arg) for arg in arguments if arg.endswith('.7z'))
+            Path(str(archive) + '.001').write_bytes(b'x' * 2048)
+        with patch('compresser_dossiers.run_sevenzip', side_effect=exact_limit):
+            volumes = compress_folder(source, self.output, self.executable, volume_bytes=2048)
+        self.assertEqual([path.name for path in volumes], [source.name + '.7z.001'])
+
+    def test_single_archive_publication_failure_restores_numbered_staging_file(self):
+        source = self.source(size=16)
+        staging = self.output / (source.name + '.compression-en-cours')
+        original_rmdir = Path.rmdir
+        def interrupted_rmdir(path):
+            if path == staging:
+                raise PermissionError('simulated finalization interruption')
+            return original_rmdir(path)
+        with patch.object(Path, 'rmdir', interrupted_rmdir):
+            with self.assertRaises(PermissionError):
+                compress_folder(source, self.output, self.executable)
+        self.assertTrue((staging / (source.name + '.7z.001')).is_file())
+        self.assertFalse((self.output / (source.name + '.7z')).exists())
+        self.assertTrue((source / 'sub/piece.bin').is_file())
 
     def test_destination_inside_source_is_refused_before_creating_it(self):
         source = self.source()

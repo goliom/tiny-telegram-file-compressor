@@ -114,7 +114,7 @@ def main():
         'README-WINDOWS.txt': ROOT / 'packaging/README-WINDOWS.txt',
         'LICENSE': ROOT / 'LICENSE',
         'THIRD_PARTY_NOTICES.md': ROOT / 'THIRD_PARTY_NOTICES.md',
-        'RELEASE_NOTES.md': ROOT / 'releases/v1.0.0.md',
+        'RELEASE_NOTES.md': ROOT / ('releases/v' + APP_VERSION + '.md'),
         'BUILDINFO.json': destination / 'BUILDINFO.json',
     }
     portable_files.update({'licenses/' + path.name: path for path in licenses.iterdir() if path.is_file()})

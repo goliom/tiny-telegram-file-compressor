@@ -80,7 +80,7 @@ def run(report_path):
     def compressed():
         assert app.compression.monitor.status_message[0] == 'done'
         assert app.compression.monitor.status_message[1]['success'] == 1
-        assert (output / 'Model.7z.001').is_file()
+        assert (output / 'Model.7z').is_file()
         results['compression'] = 'passed'
         app.extraction.root_var.set(str(output))
         assert app.extraction.policy_var.get() == 'keep'
@@ -93,7 +93,7 @@ def run(report_path):
         assert app.extraction.monitor.status_message[1]['errors'] == 0
         assert (output / 'Model/nested/piece.bin').read_bytes() == payload
         assert not (output / 'Model/Model').exists()
-        assert (output / 'Model.7z.001').is_file()
+        assert (output / 'Model.7z').is_file()
         results['extract_keep'] = 'passed'
         app.extraction.policy_var.set('delete')
         app.extraction.start()
@@ -101,7 +101,7 @@ def run(report_path):
 
     def deleted():
         assert app.extraction.monitor.status_message[1]['errors'] == 0
-        assert not (output / 'Model.7z.001').exists()
+        assert not (output / 'Model.7z').exists()
         assert (output / 'Model/nested/piece.bin').read_bytes() == payload
         assert (source / 'nested/piece.bin').read_bytes() == payload
         results.update(extract_delete='passed', source_preserved=True, success=True)

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+
+- Added German (Deutsch) and Dutch (Nederlands) throughout both interface tabs.
+- Single-volume archives smaller than 2 GB now use `.7z` instead of `.7z.001`.
+- Multipart archives retain numbered parts and a maximum of 2 GB (2,000,000,000 bytes) per file. The byte limit is unchanged from 1.0.0; labels now use GB.
+- Updated the Windows executable and verified all six languages, compression, extraction and archive cleanup.
+
 ## 1.0.0
 
 - Windows x64 executable with embedded Python/Tk, application icon and version information.

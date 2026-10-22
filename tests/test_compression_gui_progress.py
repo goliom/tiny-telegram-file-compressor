@@ -63,7 +63,7 @@ class CompressionGuiTest(AppGuiTest):
             self.pump_until(lambda: not panel.running)
         self.assertEqual([call.args[0] for call in compressor.call_args_list], [first, second])
         self.assertTrue(all(call.args[1] == output for call in compressor.call_args_list))
-        self.assertEqual(sorted(path.name for path in output.iterdir()), ['Model A.7z.001', 'Model B.7z.001'])
+        self.assertEqual(sorted(path.name for path in output.iterdir()), ['Model A.7z', 'Model B.7z'])
         self.assertTrue(all(row.state == 'row_done' for row in panel.rows.values()))
         self.assertTrue(panel.monitor.status_var.get().startswith('Finished: 2 folder(s)'))
         self.assertEqual(float(panel.monitor.total_bar.cget('value')), 100)

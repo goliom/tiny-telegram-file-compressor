@@ -45,6 +45,12 @@ The workflow builds and tests the application, then uploads the assets as a work
 
 Download the workflow artifact and attach its contents to a draft release with tag `v1.1.0`. Use [releases/v1.1.0.md](releases/v1.1.0.md) as the release description.
 
+### Publish automatically
+
+**Publish Windows release** builds, tests and publishes the current application version when release notes (`releases/v*.md`) or its workflow are pushed to `main`. It can also be started manually. Update the version and release notes together before pushing a new release.
+
+The Windows job has read access and produces verified assets. Only the separate publishing job has `contents: write`, using GitHub's temporary workflow token. It checks SHA-256 hashes, attaches the five release files and creates the version tag at the exact workflow commit. Existing releases are never replaced. No personal token is required.
+
 ## Changing the version
 
 Keep `APP_VERSION` in `app_identity.py`, `packaging/windows-version.txt`, the release notes and the version-specific documentation consistent before making a new release.

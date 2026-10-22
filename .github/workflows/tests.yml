@@ -1,0 +1,37 @@
+name: Windows tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.12', '3.14']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Ensure 7-Zip is installed
+        shell: pwsh
+        run: |
+          if (-not (Test-Path -LiteralPath 'C:\Program Files\7-Zip\7z.exe')) {
+            choco install 7zip --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          & 'C:\Program Files\7-Zip\7z.exe' i
+      - name: Check Python and Tkinter
+        run: python -c "import sys, tkinter; print(sys.version); print('Tk', tkinter.TkVersion)"
+      - name: Run tests
+        run: python -m unittest discover -s tests -p "test_*.py"

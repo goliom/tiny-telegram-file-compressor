@@ -1,0 +1,128 @@
+TINY TELEGRAM FILE COMPRESSOR
+============================
+1. Double-cliquez "Tiny Telegram File Compressor.bat".
+   L'ancien lanceur COMPRESSER_DOSSIERS.bat fonctionne aussi.
+   L'icone combine l'avion Telegram et un badge 7z. Le dossier assets doit
+   rester a cote des fichiers Python pour afficher l'icone dans les fenetres.
+   Le menu de langue en haut propose Francais, English, Espanol et Italiano.
+   Cliquez sur le nom de la langue actuelle pour choisir une autre langue.
+   Le changement est possible pendant une compression,
+   sans modifier les dossiers, la selection, la destination ou la progression.
+   Les messages du journal et les titres des dialogues sont aussi traduits.
+   Les boutons des dialogues Windows et les erreurs systeme suivent la langue
+   de Windows. La console 7-Zip conserve son affichage habituel.
+2. Choisissez l'onglet "Compresser". Le parcours comporte trois etapes.
+   Etape 1 : "Ajouter un dossier" ajoute directement le dossier choisi ;
+   "Ajouter tous les sous-dossiers" ajoute les enfants directs du dossier
+   choisi. Repetez depuis d'autres disques ou emplacements si besoin.
+   La liste conserve les ajouts, les cases cochees et la destination existante.
+   Un meme chemin n'est jamais ajoute deux fois.
+3. Les dossiers ajoutes sont coches automatiquement. Decochez les cases des
+   dossiers a exclure, ou utilisez Tout selectionner / Tout deselectionner.
+   La touche Espace bascule les cases des lignes surlignees. Les colonnes
+   indiquent le nom, l'emplacement, la taille et l'etat de chaque dossier.
+   Les tailles sont calculees en arriere-plan. "Retirer de la liste" retire
+   les lignes surlignees, sans supprimer ou modifier les dossiers du disque.
+4. Etape 2 : choisissez la destination commune des archives. Par defaut, c'est
+   le parent du premier dossier ajoute. La destination doit etre hors de tous
+   les dossiers coches pour eviter d'archiver les archives elles-memes.
+5. Etape 3 : cliquez "Demarrer la compression". Deux dossiers coches portant
+   le meme nom doivent etre renommes ou traites separement pour eviter de
+   creer deux archives du meme nom dans la destination commune.
+   Le bilan indique les reussites et erreurs. "Ouvrir la destination" devient
+   disponible apres le traitement et ouvre le dossier utilise pour ce travail.
+
+EXEMPLE DE RESULTAT
+Collection - 2026-05.7z.001
+Collection - 2026-05.7z.002
+Collection - 2026-06.7z.001
+Collection - 2026-07.7z.001
+Collection - 2026-07.7z.002
+Collection - 2026-07.7z.003
+Chaque jeu correspond a UN dossier source, independamment des autres jeux.
+Un petit dossier ne produit qu'un fichier .7z.001. Le dernier volume est plus
+petit si necessaire. Le dossier source lui-meme est inclus dans son archive.
+
+TAILLE ET COMPRESSION
+Maximum par fichier : 2 000 MB = 2 000 000 000 octets.
+Il s'agit de MB decimaux (base 1000), pas de Mio (base 1024).
+Compression fixee a Normale (niveau 5), sans option a choisir.
+La fenetre affiche deux barres : le pourcentage 7-Zip du dossier en cours et
+l'avancement total. Les barres avancent pendant la compression,
+sans attendre la fin d'un dossier. L'avancement total tient compte des tailles
+quand elles sont connues ; le compteur indique le nombre de dossiers traites.
+Pendant l'analyse initiale,
+un indicateur anime est affiche jusqu'au premier pourcentage de 7-Zip.
+Le temps restant estime concerne l'ensemble des dossiers selectionnes. Il
+est calcule d'apres leur taille et la progression observee, puis actualise
+pendant le travail. Au demarrage, "calcul en cours" apparait en attendant
+les premieres mesures. Le calcul des tailles ne lit que les metadonnees des
+fichiers et se fait en arriere-plan pour laisser la fenetre disponible.
+Il s'agit d'une estimation : le type de fichiers, la charge du disque et les
+phases d'analyse ou de finalisation peuvent faire varier la duree reelle.
+La console affiche toujours la progression detaillee et un rappel toutes les
+15 secondes. Le pourcentage peut rester stable pendant une operation longue.
+Le journal est replie par defaut. "Afficher les details" le deplie et
+"Masquer les details" le replie sans interrompre le travail. Le bilan reste
+visible meme lorsque le journal est replie. La fenetre peut etre reduite
+jusqu'a 800 x 620 pixels, pour rester utilisable sur un ordinateur portable.
+Les dossiers sont traites un par un. Le bouton d'arret laisse finir le dossier
+en cours avant d'arreter les suivants. Fermer la fenetre pendant un traitement
+demande egalement cet arret apres le dossier en cours.
+
+SOURCES ET ERREURS
+Les dossiers sources ne sont jamais supprimes ni modifies par l'outil.
+Une archive deja presente n'est jamais mise a jour ni ecrasee : le conflit
+est signale. Les dossiers avec erreur sont signales et les suivants continuent.
+Les volumes sont d'abord crees dans NomDuDossier.compression-en-cours, puis
+publies dans la destination seulement si 7-Zip reussit et que leurs tailles
+respectent la limite. Une compression interrompue reste dans ce dossier
+provisoire pour controle ; deplacez-le avant de reessayer.
+Les dossiers contenant des liens symboliques ou jonctions sont refuses.
+Pas de seconde passe de verification systematique : les sources sont conservees.
+
+Pour extraire un jeu, ouvrez le fichier .7z.001 avec 7-Zip en laissant toutes
+les parties dans le meme dossier. Python et 7-Zip sont necessaires ; aucun
+navigateur ou Playwright n'est requis.
+
+LIGNE DE COMMANDE (facultatif)
+py -u compresser_dossiers.py "H:\Collection\Collection - 2026-05" "H:\Collection\Collection - 2026-06" --destination "H:\Archives"
+Ajouter --apercu pour afficher seulement les archives prevues.
+
+DECOMPRESSER UN DOSSIER ET TOUS SES SOUS-DOSSIERS
+Choisissez l'onglet "Decompresser" dans la meme fenetre.
+Etape 1 : choisissez le dossier a parcourir.
+Etape 2 : choisissez "Conserver les archives" (selection par defaut) ou
+"Supprimer apres reussite". Ce dernier choix supprime chaque archive et
+toutes ses parties uniquement apres une extraction reussie.
+Etape 3 : cliquez "Decompresser tout".
+En cas d'erreur, les archives restent presentes et les suivantes continuent.
+
+Formats : ZIP, RAR, 7z et leurs volumes (.7z.001, .zip.001, .part1.rar, etc.).
+Les archives contenues dans les extractions sont egalement traitees.
+Un niveau unique de meme nom est retire : Modele\Modele\pieces devient
+Modele\pieces. Si Modele.zip est deja dans un dossier Modele, son contenu
+est ajoute directement a ce dossier, sans creer Modele\Modele. Aucun fichier
+existant n'est ecrase : tout conflit conserve l'archive et le contenu provisoire.
+Les dossiers internes de noms differents et les contenus avec plusieurs
+elements voisins sont conserves tels quels.
+
+Le journal .decompression-tout.json evite de refaire les extractions reussies
+quand les archives sont conservees. Une nouvelle execution avec le choix
+"Supprimer apres reussite" peut supprimer ces archives sans les extraire a nouveau, si elles
+n'ont pas change et que leur dossier extrait est toujours present.
+Laissez ce journal dans le dossier choisi pour permettre cette reprise.
+Les dossiers provisoires d'extraction ou de compression sont ignores.
+
+La fenetre affiche le pourcentage de l'archive en cours, un compteur et un
+journal. Le nombre total augmente si des archives imbriquees sont trouvees.
+Le temps restant estime tient compte des tailles des archives encore en
+attente. Il est reajuste si d'autres archives sont decouvertes a l'interieur
+des extractions. Le taux de compression des fichiers peut affecter sa precision.
+Le bouton d'arret et la fermeture laissent finir l'archive en cours.
+Le choix de langue reste disponible (francais, anglais, espagnol, italien).
+La langue s'applique aux deux onglets. Pendant un travail, l'autre onglet
+reste consultable ; ses commandes sont desactivees jusqu'a la fin du travail.
+Le bouton "Ouvrir la destination" ouvre ici le dossier qui a ete parcouru.
+Utilisez ce mode sur des telechargements termines. Le verrou empeche deux
+exemplaires de l'outil de traiter simultanement le meme dossier choisi.

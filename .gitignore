@@ -1,0 +1,41 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Editors and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local diagnostics, generated archives and interrupted work
+*.log
+*.zip
+*.7z
+*.7z.*
+*.zip.*
+*.rar
+*.r[0-9][0-9]
+*.part*.rar
+*.compression-en-cours/
+*.extraction-en-cours/
+*.doublon-en-cours-*/
+.decompression-tout.json*
+.decompression-tout.lock
+decompression-erreurs.txt
+tmp*/
+dist/
+build/

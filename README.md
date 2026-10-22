@@ -8,6 +8,10 @@ A Windows desktop utility for preparing files to share on Telegram. Choose folde
 
 Interface languages: **English, Français, Español, Italiano**.
 
+## Preview
+
+![Compression in progress with folder selection, progress bars and estimated remaining time. Personal folder names and paths are hidden.](assets/screenshot-compression.png)
+
 ## Features
 
 - One independent 7z archive set per selected folder, including all its contents and subfolders.

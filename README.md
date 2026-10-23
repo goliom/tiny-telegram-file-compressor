@@ -12,7 +12,7 @@ Interface languages: **English, Français, Español, Italiano, Deutsch, Nederlan
 
 Get the executable and source code from [GitHub Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases/latest).
 
-Windows releases are currently unsigned. Our application to the **SignPath Foundation** open-source signing program was submitted on October 23, 2026 and is awaiting review; acceptance and signing are not yet in place. See our [Code signing policy](CODE_SIGNING.md) and [Privacy policy](PRIVACY.md).
+Windows releases are currently unsigned. See our [Privacy policy](PRIVACY.md).
 
 ## Preview
 

@@ -1,5 +1,9 @@
 # Third-party notices
 
+## Pillow
+
+Image conversion uses [Pillow](https://python-pillow.github.io/), including its AVIF codecs. The Windows release includes Pillow and copies of its bundled license notices in `licenses/Pillow-*`.
+
 ## 7-Zip
 
 This application invokes an independently installed copy of [7-Zip](https://www.7-zip.org/).

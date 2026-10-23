@@ -67,7 +67,7 @@ def run(report_path):
             for name in ('Application-MIT.txt', 'Python-LICENSE.txt', 'Tcl-license.terms', 'Tk-license.terms', 'PyInstaller-COPYING.txt'):
                 assert (ASSETS.parent / 'licenses' / name).is_file(), 'Bundled license missing: ' + name
             results['runtime_licenses'] = 'included'
-        assert len(app.notebook.tabs()) == 2
+        assert len(app.notebook.tabs()) == 3
         for language in LANGUAGES:
             app.change_language(language)
         results.update(icon_loaded=True, languages=list(LANGUAGES))
@@ -104,7 +104,20 @@ def run(report_path):
         assert not (output / 'Model.7z').exists()
         assert (output / 'Model/nested/piece.bin').read_bytes() == payload
         assert (source / 'nested/piece.bin').read_bytes() == payload
-        results.update(extract_delete='passed', source_preserved=True, success=True)
+        results.update(extract_delete='passed', source_preserved=True)
+        from PIL import Image
+        Image.new('RGB', (8, 8), 'red').save(source / 'nested/render.avif')
+        app.images.root_var.set(str(source))
+        app.images.start()
+        wait_for(app.images, images_done)
+
+    def images_done():
+        from PIL import Image
+        assert app.images.message[1]['converted'] == 1
+        assert (source / 'nested/render.avif').is_file()
+        with Image.open(source / 'render.jpg') as image:
+            assert image.format == 'JPEG'
+        results.update(image_collection='passed', avif_conversion='passed', success=True)
         finish()
 
     try:

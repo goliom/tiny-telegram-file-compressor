@@ -1,7 +1,7 @@
 # Contributing
 
 Use Windows with Python 3.12 or newer, Tkinter and a separate 7-Zip installation.
-No pip packages are needed for the application or its tests.
+Install image support before running the application or tests: `py -3 -m pip install -r requirements.txt`.
 
 Run the application:
 
@@ -19,6 +19,6 @@ GUI tests require a desktop session. Archive fixtures are generated inside tempo
 
 Keep user content protected: compression must preserve source folders, extraction must keep failed archives, and output publication must not overwrite existing content.
 
-Update the French, English, Spanish and Italian message entries together when changing interface text. Include a useful regression test for changes to archive grouping, extraction layout, publication, deletion or resume behavior.
+Update all nine interface languages together when changing text. Include a useful regression test for changes to archive grouping, extraction layout, image collection, publication, deletion or resume behavior.
 
 When reporting an issue, include your Python and 7-Zip versions, the selected language, steps to reproduce, and relevant log lines. Replace personal paths and filenames before posting logs or screenshots.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0
+
+- Added recursive image collection in a third tab, with nine interface languages.
+- Added Russian, Hindi and Simplified Chinese translations.
+- AVIF images are converted to JPG copies; all source images are preserved.
+- Same-name and same-size outputs are skipped; different sizes receive numbered suffixes without overwriting existing files.
+- Bundled Pillow and AVIF codecs in the Windows executable.
+
 ## 1.1.0
 
 - Added German (Deutsch) and Dutch (Nederlands) throughout both interface tabs.

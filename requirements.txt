@@ -1,3 +1,1 @@
-# No third-party Python packages are required.
-# Runtime: Windows, Python 3.12+ with Tkinter, and a separate 7-Zip installation.
-# Tkinter, ctypes, unittest and other imports come from Python's standard library.
+Pillow==13.0.0

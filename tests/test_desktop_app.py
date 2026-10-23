@@ -6,9 +6,9 @@ from app_identity import APP_NAME
 class DesktopLayoutTest(AppGuiTest):
     def test_tabs_global_language_and_description(self):
         self.assertEqual(self.root.title(), APP_NAME)
-        self.assertEqual(len(self.app.notebook.tabs()), 2)
+        self.assertEqual(len(self.app.notebook.tabs()), 3)
         self.assertEqual([self.app.notebook.tab(tab, 'text') for tab in self.app.notebook.tabs()],
-                         ['Compresser', 'Décompresser'])
+                         ['D\u00e9compresser', 'Images', 'Compresser'])
         self.assertIn('archives multiples de 2 GB maximum', self.app.description.cget('text'))
         self.assertLessEqual(self.root.minsize()[1], 620)
         for code, name in LANGUAGES.items():
@@ -24,7 +24,7 @@ class DesktopLayoutTest(AppGuiTest):
         self.root.deiconify()
         for code in LANGUAGES:
             self.app.change_language(code)
-            for panel in self.app.panels:
+            for panel in self.app.panels[:2]:
                 self.app.notebook.select(panel)
                 self.root.update_idletasks()
                 for widget in [panel.start_button, panel.stop_button, panel.open_button,
@@ -46,7 +46,7 @@ class DesktopLayoutTest(AppGuiTest):
         self.root.deiconify()
         for code in LANGUAGES:
             self.app.change_language(code)
-            for panel in self.app.panels:
+            for panel in self.app.panels[:2]:
                 self.app.notebook.select(panel)
                 panel.monitor.toggle_details()
                 self.root.update_idletasks()

@@ -1,7 +1,7 @@
 TINY TELEGRAM FILE COMPRESSOR
 ============================
 VERSION WINDOWS EXECUTABLE
-Le ZIP Windows de la release v1.1.0 contient TinyTelegramFileCompressor.exe.
+Le ZIP Windows de la release v1.2.0 contient TinyTelegramFileCompressor.exe.
 Extrayez ce ZIP et lancez l'executable. Python est embarque ; 7-Zip reste
 a installer separement. Les instructions ci-dessous decrivent aussi la
 version source du programme.
@@ -10,7 +10,8 @@ version source du programme.
    L'ancien lanceur COMPRESSER_DOSSIERS.bat fonctionne aussi.
    L'icone combine l'avion Telegram et un badge 7z. Le dossier assets doit
    rester a cote des fichiers Python pour afficher l'icone dans les fenetres.
-   Le menu propose Francais, English, Espanol, Italiano, Deutsch et Nederlands.
+   Le menu propose francais, anglais, espagnol, italien, allemand, neerlandais,
+   russe, hindi et chinois simplifie.
    Cliquez sur le nom de la langue actuelle pour choisir une autre langue.
    Le changement est possible pendant une compression,
    sans modifier les dossiers, la selection, la destination ou la progression.
@@ -134,3 +135,12 @@ reste consultable ; ses commandes sont desactivees jusqu'a la fin du travail.
 Le bouton "Ouvrir la destination" ouvre ici le dossier qui a ete parcouru.
 Utilisez ce mode sur des telechargements termines. Le verrou empeche deux
 exemplaires de l'outil de traiter simultanement le meme dossier choisi.
+
+ONGLET IMAGES
+Choisissez une racine puis cliquez Recopier les images. Tous les sous-dossiers
+sont parcourus. Les images deja a la racine sont exclues. Meme nom et meme
+taille : copie ignoree ; taille differente : suffixe _1, _2, etc.
+Les AVIF deviennent des JPG a la racine, qualite 95, transparence sur fond blanc.
+Les originaux sont conserves. La comparaison utilise la taille et non le contenu.
+AVIF anime : premiere image seulement. Pour la version source, installez
+les dependances : py -3 -m pip install -r requirements.txt

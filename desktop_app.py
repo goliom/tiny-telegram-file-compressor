@@ -6,6 +6,7 @@ from app_identity import APP_NAME, APP_VERSION, apply_identity, configure_app_id
 from compression_i18n import LANGUAGES, text
 from compression_gui import CompressionPanel
 from decompression_gui import ExtractionPanel
+from image_gui import ImagePanel
 
 
 class DesktopApp:
@@ -40,9 +41,11 @@ class DesktopApp:
         self.notebook.pack(fill='both', expand=True)
         self.compression = CompressionPanel(self.notebook, on_state=self.update_busy)
         self.extraction = ExtractionPanel(self.notebook, on_state=self.update_busy)
-        self.panels = [self.compression, self.extraction]
-        self.notebook.add(self.compression, text=text('tab_compress'))
+        self.images = ImagePanel(self.notebook, on_state=self.update_busy)
+        self.panels = [self.compression, self.extraction, self.images]
         self.notebook.add(self.extraction, text=text('tab_extract'))
+        self.notebook.add(self.images, text=text('tab_images'))
+        self.notebook.add(self.compression, text=text('tab_compress'))
         self.root.protocol('WM_DELETE_WINDOW', self.request_close)
 
     def change_language(self, language):
@@ -54,6 +57,7 @@ class DesktopApp:
             panel.change_language(language)
         self.notebook.tab(self.compression, text=text('tab_compress', language))
         self.notebook.tab(self.extraction, text=text('tab_extract', language))
+        self.notebook.tab(self.images, text=text('tab_images', language))
 
     def update_busy(self):
         busy = any(panel.running for panel in self.panels)

@@ -10,7 +10,7 @@ from compression_i18n import LANGUAGES, MESSAGES, text
 
 class TranslationTest(unittest.TestCase):
     def test_all_languages_preserve_message_fields(self):
-        self.assertEqual(set(LANGUAGES), {'fr', 'en', 'es', 'it', 'de', 'nl'})
+        self.assertEqual(set(LANGUAGES), {'fr', 'en', 'es', 'it', 'de', 'nl', 'ru', 'hi', 'zh'})
         formatter = Formatter()
         for key, translations in MESSAGES.items():
             self.assertEqual(len(translations), len(LANGUAGES), key)

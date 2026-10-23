@@ -41,6 +41,10 @@ def write_zip(path, files, prefix):
 
 def runtime_licenses(target):
     target.mkdir(parents=True, exist_ok=True)
+    pillow = importlib.metadata.distribution('Pillow')
+    for item in pillow.files:
+        if 'licenses/' in str(item) and pillow.locate_file(item).is_file():
+            shutil.copy2(pillow.locate_file(item), target / ('Pillow-' + Path(item).name))
     shutil.copy2(Path(sys.base_prefix) / 'LICENSE.txt', target / 'Python-LICENSE.txt')
     distribution = importlib.metadata.distribution('PyInstaller')
     copying = next(path for path in distribution.files if str(path).endswith('licenses/COPYING.txt'))

@@ -9,6 +9,7 @@ from compresser_dossiers import compress_folder
 
 class CompressionGuiTest(AppGuiTest):
     def test_mouse_checkbox_changes_work_selection_without_removing_source(self):
+        self.app.notebook.select(self.app.compression)
         panel = self.app.compression
         folder = self.directory / 'Model'
         folder.mkdir()

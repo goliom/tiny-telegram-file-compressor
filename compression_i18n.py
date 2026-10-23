@@ -2,7 +2,7 @@
 from app_identity import APP_NAME
 
 LANGUAGES = {'fr': 'Français', 'en': 'English', 'es': 'Español', 'it': 'Italiano',
-             'de': 'Deutsch', 'nl': 'Nederlands'}
+             'de': 'Deutsch', 'nl': 'Nederlands', 'ru': 'Русский', 'hi': 'हिन्दी', 'zh': '简体中文'}
 
 MESSAGES = {
     'title': (APP_NAME, APP_NAME),
@@ -313,6 +313,22 @@ _GERMAN_DUTCH = {
 
 for _key in MESSAGES:
     MESSAGES[_key] += _GERMAN_DUTCH[_key]
+
+
+MESSAGES.update({
+    'tab_images': ('Images', 'Images', 'Imágenes', 'Immagini', 'Bilder', 'Afbeeldingen'),
+    'images_hint': ('Recopie les images de tous les sous-dossiers à la racine choisie. AVIF → JPG (fond blanc). Originaux conservés. Même nom et taille : ignoré ; taille différente : suffixe _1, _2…', 'Copy images from all subfolders to the selected root. AVIF → JPG (white background). Sources kept. Same name and size: skipped; different size: suffix _1, _2…', 'Copia imágenes de las subcarpetas a la raíz. AVIF → JPG (fondo blanco). Originales conservados. Mismo nombre y tamaño: omitir; tamaño diferente: sufijo _1, _2…', 'Copia le immagini dalle sottocartelle alla radice. AVIF → JPG (sfondo bianco). Originali conservati. Stesso nome e dimensione: ignora; dimensione diversa: suffisso _1, _2…', 'Bilder aus allen Unterordnern in den Stammordner kopieren. AVIF → JPG (weißer Hintergrund). Originale bleiben erhalten. Gleicher Name und Größe: überspringen; andere Größe: Suffix _1, _2…', 'Kopieer afbeeldingen uit alle submappen naar de hoofdmap. AVIF → JPG (witte achtergrond). Bronnen behouden. Zelfde naam en grootte: overslaan; andere grootte: achtervoegsel _1, _2…'),
+    'images_start': ('Recopier les images', 'Collect images', 'Recopilar imágenes', 'Raccogli immagini', 'Bilder sammeln', 'Afbeeldingen verzamelen'),
+    'images_stop': ('Arrêter après cette image', 'Stop after this image', 'Detener tras esta imagen', 'Ferma dopo questa immagine', 'Nach diesem Bild stoppen', 'Stoppen na deze afbeelding'),
+    'images_scan': ('Recherche des images…', 'Looking for images…', 'Buscando imágenes…', 'Ricerca immagini…', 'Bilder suchen…', 'Afbeeldingen zoeken…'),
+    'images_done': ('Terminé : {copied} copiée(s), {converted} convertie(s), {skipped} ignorée(s), {errors} erreur(s).', 'Finished: {copied} copied, {converted} converted, {skipped} skipped, {errors} error(s).', 'Finalizado: {copied} copiadas, {converted} convertidas, {skipped} omitidas, {errors} errores.', 'Completato: {copied} copiate, {converted} convertite, {skipped} ignorate, {errors} errori.', 'Fertig: {copied} kopiert, {converted} konvertiert, {skipped} übersprungen, {errors} Fehler.', 'Voltooid: {copied} gekopieerd, {converted} geconverteerd, {skipped} overgeslagen, {errors} fouten.'),
+    'images_stopped': ('Arrêté : {copied} copiée(s), {converted} convertie(s), {skipped} ignorée(s), {errors} erreur(s).', 'Stopped: {copied} copied, {converted} converted, {skipped} skipped, {errors} error(s).', 'Detenido: {copied} copiadas, {converted} convertidas, {skipped} omitidas, {errors} errores.', 'Interrotto: {copied} copiate, {converted} convertite, {skipped} ignorate, {errors} errori.', 'Gestoppt: {copied} kopiert, {converted} konvertiert, {skipped} übersprungen, {errors} Fehler.', 'Gestopt: {copied} gekopieerd, {converted} geconverteerd, {skipped} overgeslagen, {errors} fouten.'),
+})
+
+
+from extra_languages import MESSAGES as _EXTRA_MESSAGES
+for _key in MESSAGES:
+    MESSAGES[_key] += _EXTRA_MESSAGES[_key]
 
 
 def text(key, language='fr', **values):

@@ -1,10 +1,11 @@
-Tiny Telegram File Compressor v1.1.0 - Windows x64
+Tiny Telegram File Compressor v1.2.0 - Windows x64
 ================================================
 
 1. Extract this ZIP into a normal folder.
 2. Install 7-Zip from https://www.7-zip.org/ if it is not already installed.
 3. Double-click TinyTelegramFileCompressor.exe.
-4. Select English, French, Spanish, Italian, German or Dutch in the language menu.
+4. Use the language menu: English, French, Spanish, Italian, German, Dutch,
+   Russian, Hindi or Simplified Chinese.
 
 Python and Tk are included in the executable. No Python installation is needed.
 7-Zip is an external dependency and is not included.

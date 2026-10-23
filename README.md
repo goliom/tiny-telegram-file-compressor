@@ -6,7 +6,7 @@
 
 A Windows desktop utility for preparing files to share on Telegram. Choose folders from different drives, follow progress and estimated remaining time, and extract ZIP, RAR and 7z collections from a single interface.
 
-Interface languages: **English, Français, Español, Italiano, Deutsch, Nederlands**.
+Interface languages: **English, Français, Español, Italiano, Deutsch, Nederlands, Русский, हिन्दी, 简体中文** (Simplified Chinese).
 
 ## Downloads
 
@@ -25,6 +25,9 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 ![Extraction in progress with current and overall progress, estimated remaining time and the six available interface languages.](assets/screenshot-extraction.png)
 
 ## Features
+
+- **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and convert AVIF to JPG.
+- Matching output names and sizes are skipped; different sizes receive `_1`, `_2`, etc. Conversion uses JPG quality 95 and a white background for transparency. Animated AVIF uses its first frame. Size matching does not compare image contents.
 
 - One independent 7z archive set per selected folder, including all its contents and subfolders.
 - Parts limited to **2 GB (2,000,000,000 bytes)** each: decimal GB, not GiB. Compression is fixed to **Normal**.
@@ -47,13 +50,13 @@ The program prepares files locally. Send the resulting parts through your Telegr
 - **7-Zip**, installed separately from [7-zip.org](https://www.7-zip.org/). The app checks `PATH` and the standard Windows installation folders.
 - **For running from source only:** Python 3.12 or newer, including Tkinter/Tcl/Tk. Use the Windows installer from [python.org](https://www.python.org/downloads/windows/) and include the Tcl/Tk component.
 
-The Windows executable includes Python and Tk; users do not need a Python installation. Running from source needs no third-party Python packages. 7-Zip is an external program and is not bundled.
+The Windows executable includes Python, Tk and Pillow with AVIF support; users do not need a Python installation. Source users must install `requirements.txt`. 7-Zip is an external program and is not bundled.
 
 ## Getting started
 
 ### Windows executable
 
-1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.1.0-windows-x64.zip`.
+1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.2.0-windows-x64.zip`.
 2. Extract the ZIP and install 7-Zip if needed.
 3. Run `TinyTelegramFileCompressor.exe`.
 4. Select a language from the top-right menu. The initial interface is French.
@@ -63,6 +66,7 @@ The executable is unsigned. The ZIP includes quick-start instructions and runtim
 ### Run from source
 
 1. Download this repository using **Code → Download ZIP**, then extract the downloaded ZIP completely.
+   Install image support with `py -3 -m pip install -r requirements.txt`.
 2. Install Python and 7-Zip if needed.
 3. Double-click **`Tiny Telegram File Compressor.bat`** inside the extracted folder.
 4. Use the language menu at the top to select English or another language. The initial interface is French.
@@ -134,7 +138,7 @@ Remaining time is approximate and becomes available after initial progress measu
 
 **Show details** expands the log. Errors remain visible in the final summary even when details are collapsed. **Stop after this folder/archive**, or closing the app, lets the current item finish before stopping the rest.
 
-One job runs at a time. Both tabs remain viewable during a job; the other tab's processing controls are disabled until it finishes. Language switching stays available.
+One job runs at a time. All three tabs remain viewable during a job; other tabs' processing controls are disabled until it finishes. Language switching stays available.
 
 ## Optional command-line usage
 
@@ -177,7 +181,7 @@ See [BUILDING.md](BUILDING.md) for local builds and release assets.
 ## Notes
 
 - The application currently targets Windows; other platforms are not supported by the launcher, folder-opening code or extraction lock.
-- The GUI is translated into six languages. Some console output and detailed backend errors remain French; Windows dialogs and 7-Zip may use their own language.
+- The GUI is translated into nine languages. Some console output and detailed backend errors remain French; Windows dialogs and 7-Zip may use their own language.
 - The icon is an AI-generated combination of a Telegram-style paper airplane and a `7z` badge. This is an independent tool, not an official Telegram or 7-Zip product. See [assets/README.txt](assets/README.txt).
 
 ## License

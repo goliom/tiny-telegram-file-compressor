@@ -79,7 +79,9 @@ en cours avant d'arreter les suivants. Fermer la fenetre pendant un traitement
 demande egalement cet arret apres le dossier en cours.
 
 SOURCES ET ERREURS
-Les dossiers sources ne sont jamais supprimes ni modifies par l'outil.
+Les dossiers sources sont conserves par defaut. Option facultative decochee :
+supprimer le dossier source et son contenu apres archivage reussi, verification
+7-Zip et controle que les sources n'ont pas change.
 Une archive deja presente n'est jamais mise a jour ni ecrasee : le conflit
 est signale. Les dossiers avec erreur sont signales et les suivants continuent.
 Les volumes sont d'abord crees dans NomDuDossier.compression-en-cours, puis
@@ -155,5 +157,5 @@ Decochee : copie des fichiers originaux sans conversion, extension conservee.
 Compatible avec le renommage par dossier ; les sources restent intactes.
 
 Le dossier choisi dans Decompresser devient le dossier par defaut dans Images,
-la destination de compression et le point de depart pour ajouter des dossiers.
+le dossier a compresser en etape 1 ; son parent devient la destination en etape 2.
 Vous pouvez ensuite choisir un autre emplacement dans chaque onglet.

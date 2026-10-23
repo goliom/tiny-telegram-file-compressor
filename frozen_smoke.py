@@ -83,6 +83,8 @@ def run(report_path):
         assert (output / 'Model.7z').is_file()
         results['compression'] = 'passed'
         app.extraction.root_var.set(str(output))
+        assert any(row.path == output for row in app.compression.rows.values())
+        assert Path(app.compression.destination_var.get()) == output.parent
         assert app.extraction.policy_var.get() == 'delete'
         results['extract_default_delete'] = 'passed'
         app.extraction.keep_radio.invoke()
@@ -152,7 +154,23 @@ def run(report_path):
         assert app.images.message[1]['copied'] == 2
         assert (source / 'nested_1.avif').read_bytes() == (source / 'nested/render.avif').read_bytes()
         assert (source / 'nested_2.webp').read_bytes() == (source / 'nested/web-render.webp').read_bytes()
-        results.update(image_original_formats='passed', success=True)
+        results.update(image_original_formats='passed')
+        cleanup_source = root / 'CleanupModel'
+        cleanup_source.mkdir()
+        (cleanup_source / 'piece.txt').write_bytes(b'cleanup payload')
+        app.compression.set_all(False)
+        app.compression.add_paths([cleanup_source])
+        app.compression.destination_var.set(str(root / 'cleanup-output'))
+        assert not app.compression.delete_sources_var.get()
+        app.compression.delete_sources_check.invoke()
+        app.compression.start()
+        wait_for(app.compression, cleanup_done)
+
+    def cleanup_done():
+        assert app.compression.monitor.status_message[1]['success'] == 1
+        assert not (root / 'CleanupModel').exists()
+        assert (root / 'cleanup-output/CleanupModel.7z').is_file()
+        results.update(compression_source_cleanup='passed', shared_compression_folder='passed', success=True)
         finish()
 
     try:

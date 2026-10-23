@@ -30,7 +30,7 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 
 ## Features
 
-- Choosing a valid folder in **Extract** sets it as the default root in **Images**, the compression destination, and the starting location of compression folder dialogs. You can then change each tab independently. Existing compression selections are preserved.
+- Choosing a valid folder in **Extract** sets it as the root in **Images**, adds that folder to **Compress → 1. Choose folders**, and sets its parent as **2. Choose the destination**. You can then change each tab independently. Existing compression selections are preserved.
 - **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and optionally convert AVIF and WebP to JPG.
 - **Convert AVIF and WebP to JPG** is checked by default. Uncheck it to copy the original formats and bytes without conversion; this also works with source-folder renaming.
 - Optional **Rename using source folder name** checkbox (off by default): `Root/Model/preview.png` becomes `Root/Model_1.png`, followed by `Model_2.jpg`, etc. Uses the immediate parent folder and preserves the extension, except enabled AVIF/WebP conversions produce `.jpg`. Numbering is shared for folders with the same name; existing files are never overwritten.
@@ -46,10 +46,10 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 - Separate **Compress** and **Extract** tabs, each organized into three steps.
 - Recursive ZIP, RAR and 7z extraction, including supported multipart archives and archives found inside extracted folders.
 - Avoids redundant same-name folder wrappers, such as `Model/Model/parts` becoming `Model/parts`, while preserving other layouts.
-- Choose **Keep archives** or **Delete after success**. Keeping archives is the GUI default.
+- Choose **Keep archives** or **Delete after success**. Deleting after successful extraction is the GUI default.
 - Live item progress, size-weighted overall progress, approximate remaining time and an expandable log.
 - Stop after the current folder/archive, plus an **Open destination** button after processing.
-- Compression keeps the source folders. Existing output archives and files are protected against overwriting.
+- Compression keeps source folders by default. An optional unchecked checkbox deletes the selected source folder and its contents only after publishing and testing the archive with 7-Zip. A source metadata snapshot must also remain unchanged; verification failure or detected source changes preserve sources. Overlapping selected source folders are rejected when deletion is enabled. A failed cleanup is reported and the archive remains available. Existing output archives and files are protected against overwriting.
 
 The program prepares files locally. Send the resulting parts through your Telegram app when they are ready.
 

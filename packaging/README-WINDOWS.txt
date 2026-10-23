@@ -1,4 +1,4 @@
-Tiny Telegram File Compressor v1.2.3 - Windows x64
+Tiny Telegram File Compressor v1.2.4 - Windows x64
 ================================================
 
 1. Extract this ZIP into a normal folder.
@@ -42,6 +42,10 @@ Extensions are kept except enabled AVIF/WebP conversions produce JPG.
 Convert AVIF and WebP to JPG is checked by default. Uncheck it to copy
 the original formats without conversion, including when renaming by folder.
 
-Choosing a folder in Extract sets the Images root, compression destination
-and compression folder dialog starting location. Each tab can then be changed
+Choosing a folder in Extract sets the Images root and adds that folder to
+compression step 1. Its parent becomes the destination in step 2. Each tab can then be changed
 independently; existing compression selections are preserved.
+
+Optional source cleanup in Compress (unchecked by default): deletes the source
+folder and its contents after archive creation, a successful 7-Zip integrity
+test and an unchanged source snapshot. Failed checks preserve sources.

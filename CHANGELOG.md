@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.4
+
+- Optional compression source cleanup, unchecked by default, after archive publication, 7-Zip integrity verification and unchanged source metadata checks.
+- The folder chosen in Extract is added to compression step 1; its parent is the output destination in step 2. Automatically added suggestions are replaced when choosing another folder; manually added folders remain.
+
 ## 1.2.3
 
 - Clearer task-specific descriptions, live image naming examples, explicit copy destination and deletion warnings, and more visible completion summaries in all nine languages.

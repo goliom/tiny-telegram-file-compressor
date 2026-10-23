@@ -13,6 +13,45 @@ from sevenzip_runner import run_sevenzip
 
 
 class CompressionTest(unittest.TestCase):
+    def test_optional_cleanup_verifies_split_archive_then_deletes_only_source(self):
+        source = self.source(size=12000)
+        neighbour = self.root/'keep.txt'
+        neighbour.write_bytes(b'keep')
+        volumes = compress_folder(source, self.output, self.executable, volume_bytes=2000, delete_sources=True)
+        self.assertFalse(source.exists())
+        self.assertGreater(len(volumes), 1)
+        self.assertTrue(all(path.is_file() for path in volumes))
+        self.assertEqual(neighbour.read_bytes(), b'keep')
+        restored = self.root/'restored'
+        run_sevenzip([self.executable, 'x', str(volumes[0]), '-o' + str(restored), '-y'], 'Restore test archive')
+        self.assertEqual((restored/source.name/'sub/piece.bin').stat().st_size, 12000)
+
+    def test_cleanup_verification_failure_preserves_sources_and_archive(self):
+        source = self.source()
+        before = (source/'sub/piece.bin').read_bytes()
+        def run(arguments, *args, **kwargs):
+            if arguments[1] == 't':
+                raise RuntimeError('verification failed')
+            return run_sevenzip(arguments, *args, **kwargs)
+        with patch('compresser_dossiers.run_sevenzip', side_effect=run):
+            with self.assertRaisesRegex(RuntimeError, 'verification failed'):
+                compress_folder(source, self.output, self.executable, delete_sources=True)
+        self.assertEqual((source/'sub/piece.bin').read_bytes(), before)
+        self.assertTrue((self.output/(source.name + '.7z')).is_file())
+
+    def test_cleanup_refuses_source_modified_during_compression(self):
+        source = self.source()
+        def run(arguments, *args, **kwargs):
+            result = run_sevenzip(arguments, *args, **kwargs)
+            if arguments[1] == 'a':
+                (source/'new.txt').write_bytes(b'new data must survive')
+            return result
+        with patch('compresser_dossiers.run_sevenzip', side_effect=run):
+            with self.assertRaisesRegex(RuntimeError, 'sources conservées'):
+                compress_folder(source, self.output, self.executable, delete_sources=True)
+        self.assertEqual((source/'new.txt').read_bytes(), b'new data must survive')
+        self.assertTrue((source/'sub/piece.bin').is_file())
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1])
         self.addCleanup(self.temp.cleanup)

@@ -60,8 +60,7 @@ class DesktopApp:
         except OSError:
             return
         self.images.root_var.set(folder)
-        self.compression.default_folder = folder
-        self.compression.destination_var.set(folder)
+        self.compression.set_default_source(Path(folder).expanduser().resolve())
 
     def update_description(self, *_):
         selected = self.notebook.select()

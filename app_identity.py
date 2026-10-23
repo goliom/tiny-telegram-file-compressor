@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 APP_NAME = 'Tiny Telegram File Compressor'
-APP_VERSION = '1.2.3'
+APP_VERSION = '1.2.4'
 ASSETS = Path(__file__).resolve().parent / 'assets'
 
 

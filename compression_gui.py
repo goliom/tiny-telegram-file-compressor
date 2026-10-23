@@ -46,6 +46,8 @@ class CompressionPanel(LocalizedFrame):
         self.next_id = 0
         self.destination = None
         self.default_folder = ''
+        self.shared_source_key = None
+        self.delete_sources_var = tk.BooleanVar(master=self, value=False)
         self.destination_var = tk.StringVar(master=self)
         self.selection_var = tk.StringVar(master=self)
         self.columnconfigure(0, weight=1)
@@ -101,6 +103,9 @@ class CompressionPanel(LocalizedFrame):
         self.browse = self.local(ttk.Button(destination, command=self.choose_destination), 'browse')
         self.browse.grid(row=0, column=1, padx=(6, 0))
         self.local(ttk.Label(destination), 'settings_summary').grid(row=1, column=0, columnspan=2, sticky='w', pady=(3, 0))
+        self.delete_sources_check = self.local(ttk.Checkbutton(destination, variable=self.delete_sources_var),
+                                              'compression_delete_sources')
+        self.delete_sources_check.grid(row=2, column=0, columnspan=2, sticky='w', pady=(3, 0))
 
         work = self.local(ttk.LabelFrame(self, padding=6), 'step_run')
         work.grid(row=2, column=0, sticky='ew')
@@ -115,11 +120,25 @@ class CompressionPanel(LocalizedFrame):
         self.monitor = TaskMonitor(work, language)
         self.monitor.pack(fill='both', expand=True)
         self.inputs = [self.add_button, self.children_button, self.all_button, self.none_button,
-                       self.destination_entry, self.browse]
+                       self.destination_entry, self.browse, self.delete_sources_check]
         self.change_language(language)
         self.timer = self.after(150, self.refresh)
         threading.Thread(target=read_metadata_jobs,
                          args=(self.metadata_jobs, self.events, self.metadata_stop), daemon=True).start()
+
+    def set_default_source(self, source):
+        if self.running or not self.available or not source.name:
+            return
+        if self.shared_source_key in self.rows and self.rows[self.shared_source_key].path != source:
+            self.tree.delete(self.shared_source_key)
+            del self.rows[self.shared_source_key]
+            self.shared_source_key = None
+        existing = next((key for key, row in self.rows.items() if row.path == source), None)
+        self.add_paths([source], check_existing=True)
+        if existing is None:
+            self.shared_source_key = next(key for key, row in self.rows.items() if row.path == source)
+        self.default_folder = str(source)
+        self.destination_var.set(str(source.parent))
 
     def add_paths(self, paths, check_existing=False):
         if not self.available or self.running:
@@ -242,6 +261,7 @@ class CompressionPanel(LocalizedFrame):
             messagebox.showinfo(self.tr('destination_title'), self.tr('choose_destination'), parent=self)
             return
         destination = Path(self.destination_var.get()).expanduser().resolve()
+        delete_sources = self.delete_sources_var.get()
         names = {}
         for key, row in chosen:
             source = row.path
@@ -252,6 +272,11 @@ class CompressionPanel(LocalizedFrame):
             names[source.name.casefold()] = source
             if destination == source or destination.is_relative_to(source):
                 messagebox.showerror(self.tr('destination_title'), self.tr('destination_outside'), parent=self)
+                return
+            if delete_sources and any(other.path != source and
+                                      (source.is_relative_to(other.path) or other.path.is_relative_to(source))
+                                      for _, other in chosen):
+                messagebox.showerror(self.tr('folder_error'), self.tr('compression_overlap'), parent=self)
                 return
         try:
             executable = seven_zip()
@@ -285,11 +310,14 @@ class CompressionPanel(LocalizedFrame):
                 output_events.put(('current', {'key': key, 'name': source.name, 'index': index, 'total': len(sources)}))
                 succeeded = False
                 try:
-                    volumes = compress_folder(source, destination, executable, language=job_language,
+                    cleanup_options = {'delete_sources': True} if delete_sources else {}
+                    volumes = compress_folder(source, destination, executable, language=job_language, **cleanup_options,
                                               on_progress=lambda percent: output_events.put(('percent', {'value': percent})))
                     success += 1
                     succeeded = True
                     output_events.put(('log', {'key': 'success', 'name': source.name, 'count': len(volumes)}))
+                    if delete_sources:
+                        output_events.put(('log', {'key': 'compression_sources_deleted', 'name': source.name}))
                 except Exception as error:
                     failures += 1
                     output_events.put(('log', {'key': 'error', 'name': source.name, 'error': str(error)}))

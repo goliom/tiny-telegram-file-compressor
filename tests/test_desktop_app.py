@@ -39,16 +39,19 @@ class DesktopLayoutTest(AppGuiTest):
         with patch('decompression_gui.filedialog.askdirectory', return_value=folder):
             self.app.extraction.browse.invoke()
         self.assertEqual(self.app.images.root_var.get(), folder)
-        self.assertEqual(self.app.compression.destination_var.get(), folder)
+        self.assertEqual(self.app.compression.destination_var.get(), str(self.directory.parent))
         self.assertEqual(self.app.compression.default_folder, folder)
-        self.assertFalse(self.app.compression.rows)
+        self.assertEqual([row.path for row in self.app.compression.rows.values()], [self.directory])
         for action in (self.app.compression.add_folder, self.app.compression.add_children,
                        self.app.compression.choose_destination, self.app.images.choose):
             with patch('tkinter.filedialog.askdirectory', return_value='') as dialog:
                 action()
-                self.assertEqual(dialog.call_args.kwargs['initialdir'], folder)
+                self.assertEqual(dialog.call_args.kwargs['initialdir'], str(self.directory.parent) if action == self.app.compression.choose_destination else folder)
         other = self.directory/'Other'
         other.mkdir()
+        manual = self.directory/'Manual'
+        manual.mkdir()
+        self.app.compression.add_paths([manual])
         self.app.images.root_var.set(str(other))
         self.app.compression.destination_var.set(str(other))
         self.app.change_language('en')
@@ -56,10 +59,14 @@ class DesktopLayoutTest(AppGuiTest):
         self.assertEqual(self.app.compression.destination_var.get(), str(other))
         self.app.extraction.root_var.set(str(other))
         self.assertEqual(self.app.compression.default_folder, str(other))
+        self.assertEqual({row.path for row in self.app.compression.rows.values()}, {other, manual})
+        self.assertEqual(self.app.compression.destination_var.get(), str(other.parent))
+        self.app.extraction.root_var.set(str(other))
+        self.assertEqual(len(self.app.compression.rows), 2)
         self.app.extraction.root_var.set(str(other/'missing'))
         self.assertEqual(self.app.images.root_var.get(), str(other))
         self.app.extraction.root_var.set('')
-        self.assertEqual(self.app.compression.destination_var.get(), str(other))
+        self.assertEqual(self.app.compression.destination_var.get(), str(self.directory))
 
     def test_tabs_global_language_and_description(self):
         self.assertEqual(self.root.title(), f'{APP_NAME} v{APP_VERSION}')

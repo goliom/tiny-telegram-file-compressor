@@ -8,6 +8,34 @@ from compresser_dossiers import compress_folder
 
 
 class CompressionGuiTest(AppGuiTest):
+    def test_delete_sources_option_is_off_by_default_and_works(self):
+        panel = self.app.compression
+        self.assertFalse(panel.delete_sources_var.get())
+        source = self.directory/'Model'
+        source.mkdir()
+        (source/'piece.txt').write_bytes(b'archive payload')
+        panel.add_paths([source])
+        panel.delete_sources_check.invoke()
+        panel.start_button.invoke()
+        self.assertEqual(str(panel.delete_sources_check.cget('state')), 'disabled')
+        self.pump_until(lambda: not panel.running)
+        self.assertFalse(source.exists())
+        self.assertTrue((self.directory/'Model.7z').is_file())
+        self.assertEqual(panel.monitor.status_message[1]['success'], 1)
+
+    def test_cleanup_rejects_overlapping_selected_sources(self):
+        panel = self.app.compression
+        source = self.directory/'Model'
+        child = source/'Child'
+        child.mkdir(parents=True)
+        panel.add_paths([source, child])
+        panel.delete_sources_var.set(True)
+        with patch('compression_gui.messagebox.showerror') as error, patch('compression_gui.compress_folder') as compress:
+            panel.start_button.invoke()
+            error.assert_called_once()
+            compress.assert_not_called()
+        self.assertTrue(child.is_dir())
+
     def test_mouse_checkbox_changes_work_selection_without_removing_source(self):
         self.app.notebook.select(self.app.compression)
         panel = self.app.compression

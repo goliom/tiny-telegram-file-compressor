@@ -20,9 +20,9 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 
 ![Compression in progress with example folder names, progress bars, estimated remaining time and the nine-language menu.](assets/screenshot-compression.png)
 
-**Archive extraction and language selection**
+**Archive extraction**
 
-![Extraction in progress with current and overall progress, estimated remaining time and the six available interface languages.](assets/screenshot-extraction.png)
+![Archive extraction in v1.2.4 with current and overall progress, estimated remaining time and source archive deletion guidance.](assets/screenshot-extraction.png)
 
 **Image collection and AVIF conversion**
 

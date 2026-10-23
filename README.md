@@ -24,6 +24,10 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 
 ![Extraction in progress with current and overall progress, estimated remaining time and the six available interface languages.](assets/screenshot-extraction.png)
 
+**Image collection and AVIF conversion**
+
+![Images tab after collecting images into the root folder and converting AVIF files to JPG, showing the result summary and conversion log.](assets/screenshot-images.png)
+
 ## Features
 
 - **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and convert AVIF to JPG.

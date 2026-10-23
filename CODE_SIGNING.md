@@ -2,7 +2,7 @@
 
 ## Current status
 
-We are preparing an application to the [SignPath Foundation](https://signpath.org/) open-source signing program. No acceptance or sponsorship has been granted. Current Windows releases are unsigned.
+An application to the [SignPath Foundation](https://signpath.org/) open-source signing program was submitted on October 23, 2026 and is awaiting review. No acceptance or sponsorship has been granted. Current Windows releases are unsigned.
 
 If accepted, signed releases will carry the acknowledgement: "Free code signing provided by SignPath.io, certificate by SignPath Foundation". This statement does not describe current releases.
 

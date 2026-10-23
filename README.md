@@ -30,8 +30,8 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 
 ## Features
 
-- **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and convert AVIF to JPG.
-- Matching output names and sizes are skipped; different sizes receive `_1`, `_2`, etc. Conversion uses JPG quality 95 and a white background for transparency. Animated AVIF uses its first frame. Size matching does not compare image contents.
+- **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and convert AVIF and WebP to JPG.
+- Matching output names and sizes are skipped; different sizes receive `_1`, `_2`, etc. Conversion uses JPG quality 95 and a white background for transparency. Animated AVIF and WebP use their first frame. Size matching does not compare image contents.
 
 - One independent 7z archive set per selected folder, including all its contents and subfolders.
 - Parts limited to **2000 MiB (2,097,152,000 bytes)** each: binary MiB (1 MiB = 1,048,576 bytes). Compression is fixed to **Normal**.
@@ -168,7 +168,7 @@ Extract while keeping archives, without an interactive confirmation:
 py -3 decompresser_tout.py "D:\Example\Downloads" --garder-archives --appliquer
 ```
 
-**The standalone extraction CLI deletes successfully extracted archives by default.** Add `--garder-archives` to keep them. The GUI defaults to keeping archives.
+**The standalone extraction CLI deletes successfully extracted archives by default.** Add `--garder-archives` to keep them. The GUI also defaults to deleting successfully extracted archives; select **Keep archives** before starting to preserve them.
 
 ## Development and tests
 

@@ -83,7 +83,9 @@ def run(report_path):
         assert (output / 'Model.7z').is_file()
         results['compression'] = 'passed'
         app.extraction.root_var.set(str(output))
-        assert app.extraction.policy_var.get() == 'keep'
+        assert app.extraction.policy_var.get() == 'delete'
+        results['extract_default_delete'] = 'passed'
+        app.extraction.keep_radio.invoke()
         app.extraction.start()
         assert app.extraction.running, 'Extraction did not start'
         wait_for(app.extraction, extracted)
@@ -107,17 +109,22 @@ def run(report_path):
         results.update(extract_delete='passed', source_preserved=True)
         from PIL import Image
         Image.new('RGB', (8, 8), 'red').save(source / 'nested/render.avif')
+        Image.new('RGBA', (8, 8), (0, 0, 0, 0)).save(source / 'nested/web-render.webp')
         app.images.root_var.set(str(source))
         app.images.start()
         wait_for(app.images, images_done)
 
     def images_done():
         from PIL import Image
-        assert app.images.message[1]['converted'] == 1
+        assert app.images.message[1]['converted'] == 2
         assert (source / 'nested/render.avif').is_file()
+        assert (source / 'nested/web-render.webp').is_file()
+        with Image.open(source / 'web-render.jpg') as image:
+            assert image.format == 'JPEG'
+            assert image.getpixel((0, 0)) == (255, 255, 255)
         with Image.open(source / 'render.jpg') as image:
             assert image.format == 'JPEG'
-        results.update(image_collection='passed', avif_conversion='passed', success=True)
+        results.update(image_collection='passed', avif_conversion='passed', webp_conversion='passed', success=True)
         finish()
 
     try:

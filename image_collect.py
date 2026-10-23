@@ -37,7 +37,7 @@ def collect_images(root, stop_event, on_event):
         try:
             if is_link(source) or not source.resolve().is_relative_to(root):
                 raise ValueError('Source outside root: ' + str(source))
-            convert = source.suffix.lower() == '.avif'
+            convert = source.suffix.lower() in {'.avif', '.webp'}
             suffix = '.jpg' if convert else source.suffix
             fd, name = tempfile.mkstemp(prefix='.image-copy-', dir=root)
             os.close(fd)

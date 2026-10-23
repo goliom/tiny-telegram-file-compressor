@@ -15,6 +15,8 @@ class ExtractionGuiTest(AppGuiTest):
                 archive.writestr(f'{path.stem}/{path.stem}/piece.stl', b'exact payload')
         self.app.change_language('es')
         self.app.notebook.select(panel)
+        self.assertEqual(panel.policy_var.get(), 'delete')
+        panel.keep_radio.invoke()
         self.assertEqual(panel.policy_var.get(), 'keep')
         with patch('decompression_gui.filedialog.askdirectory', return_value=str(self.directory)):
             panel.browse.invoke()
@@ -61,7 +63,7 @@ class ExtractionGuiTest(AppGuiTest):
              patch('decompression_gui.seven_zip', return_value='fake-7z'):
             panel.start_button.invoke()
             self.pump_until(lambda: float(panel.monitor.current_bar.cget('value')) == 25)
-            self.assertFalse(observed['delete'])
+            self.assertTrue(observed['delete'])
             self.assertAlmostEqual(float(panel.monitor.total_bar.cget('value')), 6.25)
             self.assertEqual(str(panel.delete_radio.cget('state')), 'disabled')
             now[0] = 10
@@ -69,7 +71,7 @@ class ExtractionGuiTest(AppGuiTest):
                 self.app.change_language(code)
                 self.assertIn('2 min 30 s', panel.monitor.eta_var.get())
                 self.assertEqual(panel.root_var.get(), str(self.directory))
-                self.assertEqual(panel.policy_var.get(), 'keep')
+                self.assertEqual(panel.policy_var.get(), 'delete')
             self.app.request_close()
             self.assertTrue(observed['stop'].is_set())
             self.assertFalse(self.app.destroyed)

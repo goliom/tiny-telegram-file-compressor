@@ -1,4 +1,4 @@
-Tiny Telegram File Compressor v1.2.1 - Windows x64
+Tiny Telegram File Compressor v1.2.2 - Windows x64
 ================================================
 
 1. Extract this ZIP into a normal folder.
@@ -20,7 +20,8 @@ parts (.7z.001, .002, etc.). 2000 MiB means exactly 2,097,152,000 bytes.
 
 EXTRACT
 Choose a root folder. Subfolders and nested archives are scanned automatically.
-Keep archives is selected by default. Delete after success removes only the
+Delete after success is selected by default. Choose Keep archives to retain them.
+Delete after success removes only the
 archives whose extraction completed successfully. Existing content is never
 overwritten. Failed archives are kept and reported.
 

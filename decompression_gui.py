@@ -21,7 +21,7 @@ class ExtractionPanel(LocalizedFrame):
         self.events = queue.Queue()
         self.destination = None
         self.root_var = tk.StringVar(master=self)
-        self.policy_var = tk.StringVar(master=self, value='keep')
+        self.policy_var = tk.StringVar(master=self, value='delete')
         self.columnconfigure(0, weight=1)
         self.rowconfigure(3, weight=1)
 

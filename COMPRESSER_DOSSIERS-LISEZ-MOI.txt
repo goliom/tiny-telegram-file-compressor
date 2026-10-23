@@ -101,8 +101,8 @@ Ajouter --apercu pour afficher seulement les archives prevues.
 DECOMPRESSER UN DOSSIER ET TOUS SES SOUS-DOSSIERS
 Choisissez l'onglet "Decompresser" dans la meme fenetre.
 Etape 1 : choisissez le dossier a parcourir.
-Etape 2 : choisissez "Conserver les archives" (selection par defaut) ou
-"Supprimer apres reussite". Ce dernier choix supprime chaque archive et
+Etape 2 : "Supprimer apres reussite" est selectionne par defaut. Choisissez
+"Conserver les archives" pour les garder. La suppression retire chaque archive et
 toutes ses parties uniquement apres une extraction reussie.
 Etape 3 : cliquez "Decompresser tout".
 En cas d'erreur, les archives restent presentes et les suivantes continuent.
@@ -140,7 +140,7 @@ ONGLET IMAGES
 Choisissez une racine puis cliquez Recopier les images. Tous les sous-dossiers
 sont parcourus. Les images deja a la racine sont exclues. Meme nom et meme
 taille : copie ignoree ; taille differente : suffixe _1, _2, etc.
-Les AVIF deviennent des JPG a la racine, qualite 95, transparence sur fond blanc.
+Les AVIF et WebP deviennent des JPG a la racine, qualite 95, transparence sur fond blanc.
 Les originaux sont conserves. La comparaison utilise la taille et non le contenu.
-AVIF anime : premiere image seulement. Pour la version source, installez
+AVIF / WebP anime : premiere image seulement. Pour la version source, installez
 les dependances : py -3 -m pip install -r requirements.txt

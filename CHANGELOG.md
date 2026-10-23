@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2
+
+- Extraction now selects **Delete after success** by default; **Keep archives** remains available. Failed archives are always kept.
+- The Images tab converts WebP as well as AVIF to JPG while preserving originals, handling transparency on white and avoiding overwrites.
+
 ## 1.2.1
 
 - Raised the archive-part limit to 2,000 MiB (2,097,152,000 bytes), matching Telegram's documented free-account ceiling.

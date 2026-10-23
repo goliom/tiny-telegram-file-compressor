@@ -25,7 +25,7 @@ class ExtractionPanel(LocalizedFrame):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(3, weight=1)
 
-        source = self.local(ttk.LabelFrame(self, padding=8), 'step_extract_root')
+        source = self.local(ttk.LabelFrame(self, padding=6), 'step_extract_root')
         source.grid(row=0, column=0, sticky='ew')
         source.columnconfigure(0, weight=1)
         self.source_entry = ttk.Entry(source, textvariable=self.root_var)
@@ -33,8 +33,9 @@ class ExtractionPanel(LocalizedFrame):
         self.browse = self.local(ttk.Button(source, command=self.choose_folder), 'browse')
         self.browse.grid(row=0, column=1, padx=(6, 0))
         self.local(ttk.Label(source, wraplength=720), 'extract_formats').grid(row=1, column=0, columnspan=2, sticky='w', pady=(6, 0))
+        self.local(ttk.Label(source, wraplength=720), 'shared_folder_hint').grid(row=2, column=0, columnspan=2, sticky='w', pady=(4, 0))
 
-        policy = self.local(ttk.LabelFrame(self, padding=8), 'step_policy')
+        policy = self.local(ttk.LabelFrame(self, padding=6), 'step_policy')
         policy.grid(row=1, column=0, sticky='ew', pady=6)
         choices = ttk.Frame(policy)
         choices.pack(fill='x')
@@ -42,6 +43,10 @@ class ExtractionPanel(LocalizedFrame):
         self.keep_radio.pack(side='left')
         self.delete_radio = self.local(ttk.Radiobutton(choices, variable=self.policy_var, value='delete'), 'delete_archives')
         self.delete_radio.pack(side='left', padx=(20, 0))
+        self.policy_notice = ttk.Label(policy, wraplength=720, font=('Segoe UI', 9, 'bold'))
+        self.policy_notice.pack(anchor='w', pady=(6, 0))
+        self.policy_trace = self.policy_var.trace_add('write', self.update_policy_notice)
+        self.update_policy_notice()
         self.local(ttk.Label(policy, wraplength=720), 'policy_hint').pack(anchor='w', pady=(6, 0))
 
         work = self.local(ttk.LabelFrame(self, padding=8), 'step_run')
@@ -58,6 +63,11 @@ class ExtractionPanel(LocalizedFrame):
         self.monitor.pack(fill='both', expand=True)
         self.inputs = [self.source_entry, self.browse, self.keep_radio, self.delete_radio, self.start_button]
         self.timer = self.after(150, self.refresh)
+
+    def update_policy_notice(self, *_):
+        delete = self.policy_var.get() == 'delete'
+        self.policy_notice.configure(text=self.tr('delete_warning' if delete else 'keep_notice'),
+                                     foreground='#9b4b00' if delete else '')
 
     def choose_folder(self):
         selected = filedialog.askdirectory(parent=self, title=self.tr('extract_choose'), mustexist=True)
@@ -118,6 +128,7 @@ class ExtractionPanel(LocalizedFrame):
 
     def change_language(self, language):
         self.translate_widgets(language)
+        self.update_policy_notice()
         self.monitor.change_language(language)
 
     def refresh(self):
@@ -156,5 +167,6 @@ class ExtractionPanel(LocalizedFrame):
         self.timer = self.after(150, self.refresh)
 
     def shutdown(self):
+        self.policy_var.trace_remove('write', self.policy_trace)
         self.after_cancel(self.timer)
         self.monitor.shutdown()

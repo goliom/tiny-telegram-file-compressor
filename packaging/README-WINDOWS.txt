@@ -1,4 +1,4 @@
-Tiny Telegram File Compressor v1.2.2 - Windows x64
+Tiny Telegram File Compressor v1.2.3 - Windows x64
 ================================================
 
 1. Extract this ZIP into a normal folder.
@@ -33,3 +33,15 @@ https://github.com/goliom/tiny-telegram-file-compressor
 
 License: MIT for the application code. Runtime licenses are in licenses/.
 See THIRD_PARTY_NOTICES.md for Python, Tk, PyInstaller and third-party names.
+
+IMAGES
+Optional source-folder naming: Folder_1.png, Folder_2.jpg, etc.
+Off by default. Uses the immediate parent folder; originals are preserved.
+Extensions are kept except enabled AVIF/WebP conversions produce JPG.
+
+Convert AVIF and WebP to JPG is checked by default. Uncheck it to copy
+the original formats without conversion, including when renaming by folder.
+
+Choosing a folder in Extract sets the Images root, compression destination
+and compression folder dialog starting location. Each tab can then be changed
+independently; existing compression selections are preserved.

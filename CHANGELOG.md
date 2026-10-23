@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.3
+
+- Clearer task-specific descriptions, live image naming examples, explicit copy destination and deletion warnings, and more visible completion summaries in all nine languages.
+
+- Moved the version number into the Windows title bar, removing it from the in-app heading.
+
+- The folder selected in Extract supplies the Images root and compression defaults, while allowing later independent changes in each tab.
+
+- AVIF/WebP to JPG conversion can be disabled in Images; enabled by default. Original-format copying also supports source-folder renaming.
+
+- Optional image renaming using the immediate source folder name and numbered suffixes starting at 1. Originals and existing output files are preserved.
+- Added the option in all nine interface languages.
+
 ## 1.2.2
 
 - Extraction now selects **Delete after success** by default; **Keep archives** remains available. Failed archives are always kept.

@@ -3,7 +3,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from gui_helpers import AppGuiTest
-from app_identity import APP_NAME
+from app_identity import APP_NAME, APP_VERSION
 from compresser_dossiers import compress_folder
 
 
@@ -104,7 +104,7 @@ class CompressionGuiTest(AppGuiTest):
             for code, prefix in [('fr', 'Temps restant estimé'), ('en', 'Estimated time remaining'),
                                  ('es', 'Tiempo restante estimado'), ('it', 'Tempo rimanente stimato')]:
                 self.app.change_language(code)
-                self.assertEqual(self.root.title(), APP_NAME)
+                self.assertEqual(self.root.title(), f'{APP_NAME} v{APP_VERSION}')
                 self.assertTrue(panel.monitor.eta_var.get().startswith(prefix))
                 self.assertIn('3 min 10 s', panel.monitor.eta_var.get())
                 self.assertAlmostEqual(float(panel.monitor.total_bar.cget('value')), 5)

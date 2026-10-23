@@ -17,13 +17,23 @@ class ImagePanel(LocalizedFrame):
         self.stop = threading.Event()
         self.events = queue.Queue()
         self.root_var = tk.StringVar(master=self)
-        self.local(ttk.Label(self, wraplength=720), 'images_hint').pack(fill='x', pady=(0, 12))
+        self.rename_var = tk.BooleanVar(master=self, value=False)
+        self.convert_var = tk.BooleanVar(master=self, value=True)
+        self.local(ttk.Label(self, wraplength=720), 'images_hint').pack(fill='x', pady=(0, 6))
+        self.local(ttk.Label(self), 'images_root_label').pack(anchor='w', pady=(0, 4))
         row = ttk.Frame(self)
         row.pack(fill='x')
         self.entry = ttk.Entry(row, textvariable=self.root_var)
         self.entry.pack(side='left', fill='x', expand=True)
         self.browse = self.local(ttk.Button(row, command=self.choose), 'browse')
         self.browse.pack(side='right', padx=6)
+        self.rename_check = self.local(ttk.Checkbutton(self, variable=self.rename_var, command=self.update_example), 'images_rename_folder')
+        self.rename_check.pack(anchor='w', pady=(8, 0))
+        self.convert_check = self.local(ttk.Checkbutton(self, variable=self.convert_var, command=self.update_example), 'images_convert_jpg')
+        self.convert_check.pack(anchor='w', pady=(4, 0))
+        self.example = ttk.Label(self, wraplength=720)
+        self.example.pack(fill='x', pady=(4, 0))
+        self.update_example()
         buttons = ttk.Frame(self)
         buttons.pack(fill='x', pady=12)
         self.start_button = self.local(ttk.Button(buttons, command=self.start), 'images_start')
@@ -34,22 +44,25 @@ class ImagePanel(LocalizedFrame):
         self.open_button.pack(side='right')
         self.bar = ttk.Progressbar(self, maximum=100)
         self.bar.pack(fill='x')
-        self.status = ttk.Label(self, wraplength=720)
+        self.status = ttk.Label(self, wraplength=720, font=('Segoe UI', 10, 'bold'))
         self.status.pack(fill='x', pady=8)
         self.log = tk.Text(self, height=10, state='disabled', wrap='word')
         self.log.pack(fill='both', expand=True)
         self.message = ('ready', {})
+        self.destination = None
         self.set_available(True)
         self.timer = self.after(100, self.refresh)
 
     def choose(self):
-        chosen = filedialog.askdirectory(parent=self, mustexist=True)
+        initial = self.root_var.get().strip()
+        chosen = filedialog.askdirectory(parent=self, mustexist=True,
+                                        **({'initialdir': initial} if initial else {}))
         if chosen:
             self.root_var.set(chosen)
 
     def set_available(self, enabled):
         self.available = enabled
-        for widget in (self.entry, self.browse, self.start_button):
+        for widget in (self.entry, self.browse, self.start_button, self.rename_check, self.convert_check):
             widget.configure(state='normal' if enabled and not self.running else 'disabled')
         self.stop_button.configure(state='normal' if self.running and not self.stop.is_set() else 'disabled')
 
@@ -60,6 +73,10 @@ class ImagePanel(LocalizedFrame):
             messagebox.showerror(self.tr('folder_error'), self.tr('choose_destination'), parent=self)
             return
         root = Path(self.root_var.get()).resolve()
+        self.destination = root
+        self.status.configure(foreground='')
+        rename_by_folder = self.rename_var.get()
+        convert_to_jpg = self.convert_var.get()
         self.running = True
         self.stop.clear()
         self.bar.configure(mode='indeterminate', value=0)
@@ -69,7 +86,8 @@ class ImagePanel(LocalizedFrame):
         events, stop = self.events, self.stop
         def work():
             try:
-                collect_images(root, stop, lambda kind, **values: events.put((kind, values)))
+                collect_images(root, stop, lambda kind, **values: events.put((kind, values)),
+                               rename_by_folder=rename_by_folder, convert_to_jpg=convert_to_jpg)
             except Exception as error:
                 events.put(('fatal', {'error': str(error)}))
             finally:
@@ -81,11 +99,18 @@ class ImagePanel(LocalizedFrame):
         self.set_available(self.available)
 
     def open_destination(self):
-        if self.root_var.get():
-            open_folder(Path(self.root_var.get()), self, self.language)
+        folder = self.destination or (Path(self.root_var.get()) if self.root_var.get() else None)
+        if folder:
+            open_folder(folder, self, self.language)
+
+    def update_example(self):
+        example = self.tr('images_example_renamed' if self.rename_var.get() else 'images_example_original')
+        format_hint = self.tr('images_format_convert' if self.convert_var.get() else 'images_format_keep')
+        self.example.configure(text=example + '\n' + format_hint)
 
     def change_language(self, language):
         self.translate_widgets(language)
+        self.update_example()
         self.status.configure(text=self.tr(self.message[0], **self.message[1]))
 
     def refresh(self):
@@ -104,8 +129,10 @@ class ImagePanel(LocalizedFrame):
                 elif kind == 'finished':
                     stopped = values.pop('stopped')
                     self.message = ('images_stopped' if stopped else 'images_done', values)
+                    self.status.configure(foreground='#b3261e' if values['errors'] else '#237344')
                 elif kind == 'fatal':
                     self.message = ('extract_failed', values)
+                    self.status.configure(foreground='#b3261e')
                 elif kind == 'worker_done':
                     self.bar.stop()
                     self.bar.configure(mode='determinate')

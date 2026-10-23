@@ -75,7 +75,7 @@ class TaskMonitor(LocalizedFrame):
         self.total_bar = ttk.Progressbar(self, maximum=100)
         self.total_bar.pack(fill='x', pady=(2, 4))
         ttk.Label(self, textvariable=self.eta_var).pack(anchor='w')
-        self.summary = ttk.Label(self, textvariable=self.status_var, wraplength=730)
+        self.summary = ttk.Label(self, textvariable=self.status_var, wraplength=730, font=('Segoe UI', 9, 'bold'))
         self.summary.pack(anchor='w', pady=(2, 0))
         self.details_button = ttk.Button(self, command=self.toggle_details)
         self.details_button.pack(anchor='w', pady=(4, 0))

@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 APP_NAME = 'Tiny Telegram File Compressor'
-APP_VERSION = '1.2.2'
+APP_VERSION = '1.2.3'
 ASSETS = Path(__file__).resolve().parent / 'assets'
 
 
@@ -15,7 +15,7 @@ def configure_app_id():
 
 def apply_identity(window, subtitle=None):
     import tkinter as tk
-    window.title(APP_NAME + (' — ' + subtitle if subtitle else ''))
+    window.title(f'{APP_NAME} v{APP_VERSION}' + (' — ' + subtitle if subtitle else ''))
     icon = ASSETS / 'tiny-telegram-file-compressor.ico'
     if icon.is_file() and os.name == 'nt':
         window.iconbitmap(str(icon))

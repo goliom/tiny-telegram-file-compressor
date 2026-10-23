@@ -30,7 +30,10 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 
 ## Features
 
-- **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and convert AVIF and WebP to JPG.
+- Choosing a valid folder in **Extract** sets it as the default root in **Images**, the compression destination, and the starting location of compression folder dialogs. You can then change each tab independently. Existing compression selections are preserved.
+- **Images** tab: recursively copy images from subfolders into the chosen root, preserve originals and optionally convert AVIF and WebP to JPG.
+- **Convert AVIF and WebP to JPG** is checked by default. Uncheck it to copy the original formats and bytes without conversion; this also works with source-folder renaming.
+- Optional **Rename using source folder name** checkbox (off by default): `Root/Model/preview.png` becomes `Root/Model_1.png`, followed by `Model_2.jpg`, etc. Uses the immediate parent folder and preserves the extension, except enabled AVIF/WebP conversions produce `.jpg`. Numbering is shared for folders with the same name; existing files are never overwritten.
 - Matching output names and sizes are skipped; different sizes receive `_1`, `_2`, etc. Conversion uses JPG quality 95 and a white background for transparency. Animated AVIF and WebP use their first frame. Size matching does not compare image contents.
 
 - One independent 7z archive set per selected folder, including all its contents and subfolders.
@@ -194,3 +197,7 @@ See [BUILDING.md](BUILDING.md) for local builds and release assets.
 
 This project's code is distributed under the [MIT License](LICENSE).
 External programs and third-party names retain their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+### Interface guidance
+
+Each tab shows a short explanation of its task. Images identifies the scan folder as the destination for copies and previews the naming/format options. Extract highlights whether source archives will be deleted or retained. Completion summaries are emphasized, with an Open folder button for the results. All guidance is available in nine languages.

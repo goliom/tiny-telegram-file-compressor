@@ -140,7 +140,20 @@ ONGLET IMAGES
 Choisissez une racine puis cliquez Recopier les images. Tous les sous-dossiers
 sont parcourus. Les images deja a la racine sont exclues. Meme nom et meme
 taille : copie ignoree ; taille differente : suffixe _1, _2, etc.
-Les AVIF et WebP deviennent des JPG a la racine, qualite 95, transparence sur fond blanc.
+Si la conversion est cochee (par defaut), les AVIF et WebP deviennent des JPG a la racine, qualite 95, transparence sur fond blanc.
 Les originaux sont conserves. La comparaison utilise la taille et non le contenu.
 AVIF / WebP anime : premiere image seulement. Pour la version source, installez
 les dependances : py -3 -m pip install -r requirements.txt
+
+Option Images : Renommer avec le nom du dossier source (decochee par defaut).
+Le dossier contenant directement chaque image donne son nom aux copies :
+Dossier_1.png, Dossier_2.jpg, etc. Extension conservee, sauf AVIF/WebP en JPG si la conversion est cochee.
+Les originaux restent intacts ; aucun fichier existant n'est ecrase.
+
+Option Images : Convertir les AVIF et WebP en JPG (cochee par defaut).
+Decochee : copie des fichiers originaux sans conversion, extension conservee.
+Compatible avec le renommage par dossier ; les sources restent intactes.
+
+Le dossier choisi dans Decompresser devient le dossier par defaut dans Images,
+la destination de compression et le point de depart pour ajouter des dossiers.
+Vous pouvez ensuite choisir un autre emplacement dans chaque onglet.

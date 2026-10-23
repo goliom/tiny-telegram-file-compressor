@@ -45,6 +45,7 @@ class CompressionPanel(LocalizedFrame):
         self.rows = {}
         self.next_id = 0
         self.destination = None
+        self.default_folder = ''
         self.destination_var = tk.StringVar(master=self)
         self.selection_var = tk.StringVar(master=self)
         self.columnconfigure(0, weight=1)
@@ -143,7 +144,8 @@ class CompressionPanel(LocalizedFrame):
         self.update_controls()
 
     def add_folder(self):
-        selected = filedialog.askdirectory(parent=self, title=self.tr('folder_dialog'), mustexist=True)
+        selected = filedialog.askdirectory(parent=self, title=self.tr('folder_dialog'), mustexist=True,
+                                           **({'initialdir': self.default_folder} if self.default_folder else {}))
         if not selected:
             return
         path = Path(selected).absolute()
@@ -153,7 +155,8 @@ class CompressionPanel(LocalizedFrame):
         self.add_paths([path], check_existing=True)
 
     def add_children(self):
-        selected = filedialog.askdirectory(parent=self, title=self.tr('parent_dialog'), mustexist=True)
+        selected = filedialog.askdirectory(parent=self, title=self.tr('parent_dialog'), mustexist=True,
+                                           **({'initialdir': self.default_folder} if self.default_folder else {}))
         if not selected:
             return
         try:
@@ -166,7 +169,9 @@ class CompressionPanel(LocalizedFrame):
         self.add_paths(paths)
 
     def choose_destination(self):
-        selected = filedialog.askdirectory(parent=self, title=self.tr('destination_dialog'))
+        initial = self.destination_var.get().strip() or self.default_folder
+        selected = filedialog.askdirectory(parent=self, title=self.tr('destination_dialog'),
+                                           **({'initialdir': initial} if initial else {}))
         if selected:
             self.destination_var.set(selected)
 

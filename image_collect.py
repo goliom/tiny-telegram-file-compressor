@@ -8,7 +8,7 @@ from archive_layout import is_link
 EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp', '.tif', '.tiff', '.avif', '.ico'}
 
 
-def collect_images(root, stop_event, on_event):
+def collect_images(root, stop_event, on_event, *, rename_by_folder=False, convert_to_jpg=True):
     root = Path(root).absolute()
     if is_link(root) or not root.is_dir():
         raise ValueError('Invalid root folder')
@@ -30,6 +30,7 @@ def collect_images(root, stop_event, on_event):
             if source.suffix.lower() in EXTENSIONS and not is_link(source):
                 images.append(source)
     total = len(images)
+    next_numbers = {}
     for index, source in enumerate(images, 1):
         if stop_event.is_set():
             break
@@ -37,7 +38,7 @@ def collect_images(root, stop_event, on_event):
         try:
             if is_link(source) or not source.resolve().is_relative_to(root):
                 raise ValueError('Source outside root: ' + str(source))
-            convert = source.suffix.lower() in {'.avif', '.webp'}
+            convert = convert_to_jpg and source.suffix.lower() in {'.avif', '.webp'}
             suffix = '.jpg' if convert else source.suffix
             fd, name = tempfile.mkstemp(prefix='.image-copy-', dir=root)
             os.close(fd)
@@ -52,9 +53,11 @@ def collect_images(root, stop_event, on_event):
             else:
                 shutil.copyfile(source, temporary)
             size = temporary.stat().st_size
-            number = 0
+            stem = source.parent.name if rename_by_folder else source.stem
+            number_key = stem.casefold()
+            number = next_numbers.get(number_key, 1) if rename_by_folder else 0
             while True:
-                target = root / (source.stem + (f'_{number}' if number else '') + suffix)
+                target = root / (stem + (f'_{number}' if number else '') + suffix)
                 if target.exists() or is_link(target):
                     if not is_link(target) and target.is_file() and target.stat().st_size == size:
                         counts['skipped'] += 1
@@ -70,6 +73,8 @@ def collect_images(root, stop_event, on_event):
                     break
                 except FileExistsError:
                     continue
+            if rename_by_folder:
+                next_numbers[number_key] = number + 1
             on_event('log', message=f'{source.relative_to(root)} → {target.name}')
         except Exception as error:
             counts['errors'] += 1

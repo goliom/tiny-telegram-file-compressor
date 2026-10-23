@@ -317,7 +317,9 @@ for _key in MESSAGES:
 
 MESSAGES.update({
     'tab_images': ('Images', 'Images', 'Imágenes', 'Immagini', 'Bilder', 'Afbeeldingen'),
-    'images_hint': ('Recopie les images de tous les sous-dossiers à la racine choisie. AVIF / WebP → JPG (fond blanc). Originaux conservés. Même nom et taille : ignoré ; taille différente : suffixe _1, _2…', 'Copy images from all subfolders to the selected root. AVIF / WebP → JPG (white background). Sources kept. Same name and size: skipped; different size: suffix _1, _2…', 'Copia imágenes de las subcarpetas a la raíz. AVIF / WebP → JPG (fondo blanco). Originales conservados. Mismo nombre y tamaño: omitir; tamaño diferente: sufijo _1, _2…', 'Copia le immagini dalle sottocartelle alla radice. AVIF / WebP → JPG (sfondo bianco). Originali conservati. Stesso nome e dimensione: ignora; dimensione diversa: suffisso _1, _2…', 'Bilder aus allen Unterordnern in den Stammordner kopieren. AVIF / WebP → JPG (weißer Hintergrund). Originale bleiben erhalten. Gleicher Name und Größe: überspringen; andere Größe: Suffix _1, _2…', 'Kopieer afbeeldingen uit alle submappen naar de hoofdmap. AVIF / WebP → JPG (witte achtergrond). Bronnen behouden. Zelfde naam en grootte: overslaan; andere grootte: achtervoegsel _1, _2…'),
+    'images_convert_jpg': ('Convertir les AVIF et WebP en JPG (fond blanc)', 'Convert AVIF and WebP to JPG (white background)', 'Convertir AVIF y WebP a JPG (fondo blanco)', 'Converti AVIF e WebP in JPG (sfondo bianco)', 'AVIF und WebP in JPG umwandeln (weißer Hintergrund)', 'AVIF en WebP naar JPG converteren (witte achtergrond)'),
+    'images_rename_folder': ('Renommer avec le nom du dossier source (Dossier_1.jpg, Dossier_2.png…)', 'Rename using source folder name (Folder_1.jpg, Folder_2.png…)', 'Renombrar con el nombre de la carpeta de origen (Carpeta_1.jpg, Carpeta_2.png…)', 'Rinomina con il nome della cartella di origine (Cartella_1.jpg, Cartella_2.png…)', 'Nach Quellordner benennen (Ordner_1.jpg, Ordner_2.png…)', 'Hernoemen naar bronmap (Map_1.jpg, Map_2.png…)'),
+    'images_hint': ('Recopie les images de tous les sous-dossiers à la racine choisie. Originaux conservés. Même nom et taille : ignoré ; taille différente : suffixe _1, _2…', 'Copy images from all subfolders to the selected root. Sources kept. Same name and size: skipped; different size: suffix _1, _2…', 'Copia imágenes de las subcarpetas a la raíz. Originales conservados. Mismo nombre y tamaño: omitir; tamaño diferente: sufijo _1, _2…', 'Copia le immagini dalle sottocartelle alla radice. Originali conservati. Stesso nome e dimensione: ignora; dimensione diversa: suffisso _1, _2…', 'Bilder aus allen Unterordnern in den Stammordner kopieren. Originale bleiben erhalten. Gleicher Name und Größe: überspringen; andere Größe: Suffix _1, _2…', 'Kopieer afbeeldingen uit alle submappen naar de hoofdmap. Bronnen behouden. Zelfde naam en grootte: overslaan; andere grootte: achtervoegsel _1, _2…'),
     'images_start': ('Recopier les images', 'Collect images', 'Recopilar imágenes', 'Raccogli immagini', 'Bilder sammeln', 'Afbeeldingen verzamelen'),
     'images_stop': ('Arrêter après cette image', 'Stop after this image', 'Detener tras esta imagen', 'Ferma dopo questa immagine', 'Nach diesem Bild stoppen', 'Stoppen na deze afbeelding'),
     'images_scan': ('Recherche des images…', 'Looking for images…', 'Buscando imágenes…', 'Ricerca immagini…', 'Bilder suchen…', 'Afbeeldingen zoeken…'),
@@ -329,6 +331,10 @@ MESSAGES.update({
 from extra_languages import MESSAGES as _EXTRA_MESSAGES
 for _key in MESSAGES:
     MESSAGES[_key] += _EXTRA_MESSAGES[_key]
+
+
+from ux_i18n import MESSAGES as _UX_MESSAGES
+MESSAGES.update(_UX_MESSAGES)
 
 
 def text(key, language='fr', **values):

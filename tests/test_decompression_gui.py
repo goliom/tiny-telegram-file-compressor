@@ -6,6 +6,16 @@ from gui_helpers import AppGuiTest
 
 
 class ExtractionGuiTest(AppGuiTest):
+    def test_policy_warning_follows_selection_and_language(self):
+        panel = self.app.extraction
+        self.assertIn('seront supprimées', panel.policy_notice.cget('text'))
+        panel.keep_radio.invoke()
+        self.assertIn('seront conservées', panel.policy_notice.cget('text'))
+        self.app.change_language('en')
+        self.assertEqual(panel.policy_notice.cget('text'), 'Source archives will be kept.')
+        panel.delete_radio.invoke()
+        self.assertIn('will be deleted', panel.policy_notice.cget('text'))
+
     def test_keep_then_delete_with_real_archives_and_same_name_folders(self):
         panel = self.app.extraction
         paths = [self.directory / 'Model/Model.zip', self.directory / 'other/Image.zip']

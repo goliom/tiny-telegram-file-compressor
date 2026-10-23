@@ -111,6 +111,7 @@ def run(report_path):
         Image.new('RGB', (8, 8), 'red').save(source / 'nested/render.avif')
         Image.new('RGBA', (8, 8), (0, 0, 0, 0)).save(source / 'nested/web-render.webp')
         app.images.root_var.set(str(source))
+        assert app.images.convert_var.get()
         app.images.start()
         wait_for(app.images, images_done)
 
@@ -124,7 +125,34 @@ def run(report_path):
             assert image.getpixel((0, 0)) == (255, 255, 255)
         with Image.open(source / 'render.jpg') as image:
             assert image.format == 'JPEG'
-        results.update(image_collection='passed', avif_conversion='passed', webp_conversion='passed', success=True)
+        results.update(image_collection='passed', avif_conversion='passed', webp_conversion='passed')
+        app.images.rename_check.invoke()
+        assert app.images.rename_var.get()
+        app.images.start()
+        wait_for(app.images, renamed_images_done)
+
+    def renamed_images_done():
+        assert app.images.message[1]['errors'] == 0
+        assert app.images.message[1]['converted'] == 2
+        from PIL import Image
+        for name in ('nested_1.jpg', 'nested_2.jpg'):
+            with Image.open(source / name) as image:
+                assert image.format == 'JPEG'
+        assert (source / 'nested/render.avif').is_file()
+        assert (source / 'nested/web-render.webp').is_file()
+        results.update(image_folder_renaming='passed')
+        app.images.convert_check.invoke()
+        assert not app.images.convert_var.get()
+        app.images.start()
+        wait_for(app.images, original_images_done)
+
+    def original_images_done():
+        assert app.images.message[1]['errors'] == 0
+        assert app.images.message[1]['converted'] == 0
+        assert app.images.message[1]['copied'] == 2
+        assert (source / 'nested_1.avif').read_bytes() == (source / 'nested/render.avif').read_bytes()
+        assert (source / 'nested_2.webp').read_bytes() == (source / 'nested/web-render.webp').read_bytes()
+        results.update(image_original_formats='passed', success=True)
         finish()
 
     try:

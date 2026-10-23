@@ -9,7 +9,7 @@ class DesktopLayoutTest(AppGuiTest):
         self.assertEqual(len(self.app.notebook.tabs()), 3)
         self.assertEqual([self.app.notebook.tab(tab, 'text') for tab in self.app.notebook.tabs()],
                          ['D\u00e9compresser', 'Images', 'Compresser'])
-        self.assertIn('archives multiples de 2 GB maximum', self.app.description.cget('text'))
+        self.assertIn('archives multiples de 2000 MiB maximum', self.app.description.cget('text'))
         self.assertLessEqual(self.root.minsize()[1], 620)
         for code, name in LANGUAGES.items():
             self.app.change_language(code)

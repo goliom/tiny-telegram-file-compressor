@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1
+
+- Raised the archive-part limit to 2,000 MiB (2,097,152,000 bytes), matching Telegram's documented free-account ceiling.
+- Updated all nine interface languages, command-line help and documentation to show MiB explicitly.
+
 ## 1.2.0
 
 - Added recursive image collection in a third tab, with nine interface languages.

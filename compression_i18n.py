@@ -6,8 +6,8 @@ LANGUAGES = {'fr': 'Français', 'en': 'English', 'es': 'Español', 'it': 'Italia
 
 MESSAGES = {
     'title': (APP_NAME, APP_NAME),
-    'heading': ("Compressez vos dossiers en archives multiples de 2 GB maximum pour Telegram, ou décompressez toutes les archives d'un dossier et de ses sous dossiers.", 'Compress your folders into multipart archives of up to 2 GB per file for Telegram, or extract all archives in a folder and its subfolders.'),
-    'limit': ('Volumes limités à 2 GB (2 000 000 000 octets). Les dossiers sources sont conservés.', 'Volumes limited to 2 GB (2,000,000,000 bytes). Source folders are kept.'),
+    'heading': ("Compressez vos dossiers en archives multiples de 2000 MiB maximum pour Telegram, ou décompressez toutes les archives d'un dossier et de ses sous dossiers.", 'Compress your folders into multipart archives of up to 2000 MiB per file for Telegram, or extract all archives in a folder and its subfolders.'),
+    'limit': ('Volumes limités à 2000 MiB (2 097 152 000 octets). Les dossiers sources sont conservés.', 'Volumes limited to 2000 MiB (2,097,152,000 bytes). Source folders are kept.'),
     'sources_empty': ('Ajoutez des dossiers depuis un ou plusieurs emplacements.', 'Add folders from one or more locations.'),
     'sources_count': ('{count} dossier(s) ajouté(s). Vous pouvez compléter la liste depuis un autre disque.', '{count} folder(s) added. You can add more from another drive.'),
     'add_children': ('Ajouter les sous-dossiers d’un dossier…', 'Add subfolders from a folder…'),
@@ -67,8 +67,8 @@ MESSAGES = {
 
 _SPANISH_ITALIAN = {
     'title': (APP_NAME, APP_NAME),
-    'heading': ('Comprima sus carpetas en archivos divididos de hasta 2 GB por parte para Telegram, o descomprima todos los archivos de una carpeta y sus subcarpetas.', 'Comprimi le tue cartelle in archivi suddivisi da massimo 2 GB per parte per Telegram, oppure estrai tutti gli archivi di una cartella e delle sue sottocartelle.'),
-    'limit': ('Volúmenes de hasta 2 GB (2.000.000.000 bytes). Se conservan las carpetas originales.', 'Volumi fino a 2 GB (2.000.000.000 byte). Le cartelle originali vengono conservate.'),
+    'heading': ('Comprima sus carpetas en archivos divididos de hasta 2000 MiB por parte para Telegram, o descomprima todos los archivos de una carpeta y sus subcarpetas.', 'Comprimi le tue cartelle in archivi suddivisi da massimo 2000 MiB per parte per Telegram, oppure estrai tutti gli archivi di una cartella e delle sue sottocartelle.'),
+    'limit': ('Volúmenes de hasta 2000 MiB (2.097.152.000 bytes). Se conservan las carpetas originales.', 'Volumi fino a 2000 MiB (2.097.152.000 byte). Le cartelle originali vengono conservate.'),
     'sources_empty': ('Añada carpetas desde una o varias ubicaciones.', 'Aggiungi cartelle da una o più posizioni.'),
     'sources_count': ('{count} carpeta(s) añadida(s). Puede añadir más desde otra unidad.', '{count} cartelle aggiunte. Puoi aggiungerne altre da un’altra unità.'),
     'add_children': ('Añadir las subcarpetas de una carpeta…', 'Aggiungi le sottocartelle di una cartella…'),
@@ -148,7 +148,7 @@ MESSAGES.update({
     'row_done': ('Terminé', 'Done', 'Finalizado', 'Completato'),
     'row_error': ('Erreur', 'Error', 'Error', 'Errore'),
     'size_pending': ('Calcul…', 'Calculating…', 'Calculando…', 'Calcolo…'),
-    'settings_summary': ('7z · 2 GB maximum par fichier · Compression normale', '7z · 2 GB maximum per file · Normal compression', '7z · 2 GB como máximo por archivo · Compresión normal', '7z · Massimo 2 GB per file · Compressione normale'),
+    'settings_summary': ('7z · 2000 MiB maximum par fichier · Compression normale', '7z · 2000 MiB maximum per file · Normal compression', '7z · 2000 MiB como máximo por archivo · Compresión normal', '7z · Massimo 2000 MiB per file · Compressione normale'),
     'start_compact': ('Démarrer la compression', 'Start compression', 'Iniciar compresión', 'Avvia compressione'),
     'open_destination': ('Ouvrir la destination', 'Open destination', 'Abrir destino', 'Apri destinazione'),
     'open_error': ('Impossible d’ouvrir le dossier : {error}', 'Cannot open folder: {error}', 'No se puede abrir la carpeta: {error}', 'Impossibile aprire la cartella: {error}'),
@@ -198,8 +198,8 @@ MESSAGES.update({
 
 _GERMAN_DUTCH = {
     'title': (APP_NAME, APP_NAME),
-    'heading': ('Komprimieren Sie Ihre Ordner für Telegram in Archive mit maximal 2 GB pro Datei, oder entpacken Sie alle Archive in einem Ordner und seinen Unterordnern.', 'Comprimeer uw mappen voor Telegram tot archieven van maximaal 2 GB per bestand, of pak alle archieven in een map en de bijbehorende submappen uit.'),
-    'limit': ('Maximal 2 GB (2.000.000.000 Bytes) pro Datei. Quellordner bleiben erhalten.', 'Maximaal 2 GB (2.000.000.000 bytes) per bestand. Bronmappen blijven behouden.'),
+    'heading': ('Komprimieren Sie Ihre Ordner für Telegram in Archive mit maximal 2000 MiB pro Datei, oder entpacken Sie alle Archive in einem Ordner und seinen Unterordnern.', 'Comprimeer uw mappen voor Telegram tot archieven van maximaal 2000 MiB per bestand, of pak alle archieven in een map en de bijbehorende submappen uit.'),
+    'limit': ('Maximal 2000 MiB (2.097.152.000 Bytes) pro Datei. Quellordner bleiben erhalten.', 'Maximaal 2000 MiB (2.097.152.000 bytes) per bestand. Bronmappen blijven behouden.'),
     'sources_empty': ('Fügen Sie Ordner von einem oder mehreren Speicherorten hinzu.', 'Voeg mappen vanaf één of meer locaties toe.'),
     'sources_count': ('{count} Ordner hinzugefügt. Sie können weitere von einem anderen Laufwerk hinzufügen.', '{count} map(pen) toegevoegd. U kunt meer mappen vanaf een ander station toevoegen.'),
     'add_children': ('Alle Unterordner hinzufügen…', 'Alle submappen toevoegen…'),
@@ -272,7 +272,7 @@ _GERMAN_DUTCH = {
     'row_done': ('Fertig', 'Voltooid'),
     'row_error': ('Fehler', 'Fout'),
     'size_pending': ('Berechnung…', 'Berekenen…'),
-    'settings_summary': ('7z · Maximal 2 GB pro Datei · Normale Kompression', '7z · Maximaal 2 GB per bestand · Normale compressie'),
+    'settings_summary': ('7z · Maximal 2000 MiB pro Datei · Normale Kompression', '7z · Maximaal 2000 MiB per bestand · Normale compressie'),
     'start_compact': ('Kompression starten', 'Compressie starten'),
     'open_destination': ('Ziel öffnen', 'Bestemming openen'),
     'open_error': ('Ordner kann nicht geöffnet werden: {error}', 'Kan de map niet openen: {error}'),

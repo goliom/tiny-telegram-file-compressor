@@ -16,11 +16,11 @@ The build script runs the unit/integration tests, builds a windowed one-file exe
 
 That test exercises the compiled application itself: Tk startup, bundled icon loading, all interface languages, real folder compression, recursive extraction while keeping archives, subsequent archive cleanup and source preservation.
 
-Verified assets are written to `dist/v1.2.0/`:
+Verified assets are written to `dist/v1.2.1/`:
 
-- `TinyTelegramFileCompressor-v1.2.0-windows-x64.exe`
-- `TinyTelegramFileCompressor-v1.2.0-windows-x64.zip`
-- `tiny-telegram-file-compressor-v1.2.0-source.zip`
+- `TinyTelegramFileCompressor-v1.2.1-windows-x64.exe`
+- `TinyTelegramFileCompressor-v1.2.1-windows-x64.zip`
+- `tiny-telegram-file-compressor-v1.2.1-source.zip`
 - `BUILDINFO.json`
 - `SHA256SUMS.txt`
 
@@ -32,7 +32,7 @@ License texts are also embedded in the one-file executable.
 To repeat the compiled smoke test:
 
 ```powershell
-& '.\dist\v1.2.0\TinyTelegramFileCompressor-v1.2.0-windows-x64.exe' --self-test '.\build\windows\recheck.json'
+& '.\dist\v1.2.1\TinyTelegramFileCompressor-v1.2.1-windows-x64.exe' --self-test '.\build\windows\recheck.json'
 Get-Content '.\build\windows\recheck.json'
 ```
 
@@ -43,7 +43,7 @@ The test uses temporary sample data beside its report and removes the sample dat
 After committing and pushing the build files, open **Actions → Build Windows release → Run workflow**.
 The workflow builds and tests the application, then uploads the assets as a workflow artifact. It does not publish a release automatically.
 
-Download the workflow artifact and attach its contents to a draft release with tag `v1.2.0`. Use [releases/v1.2.0.md](releases/v1.2.0.md) as the release description.
+Download the workflow artifact and attach its contents to a draft release with tag `v1.2.1`. Use [releases/v1.2.1.md](releases/v1.2.1.md) as the release description.
 
 ### Publish automatically
 

@@ -1,7 +1,7 @@
 TINY TELEGRAM FILE COMPRESSOR
 ============================
 VERSION WINDOWS EXECUTABLE
-Le ZIP Windows de la release v1.2.0 contient TinyTelegramFileCompressor.exe.
+Le ZIP Windows de la release v1.2.1 contient TinyTelegramFileCompressor.exe.
 Extrayez ce ZIP et lancez l'executable. Python est embarque ; 7-Zip reste
 a installer separement. Les instructions ci-dessous decrivent aussi la
 version source du programme.
@@ -47,13 +47,13 @@ Collection - 2026-07.7z.001
 Collection - 2026-07.7z.002
 Collection - 2026-07.7z.003
 Chaque jeu correspond a UN dossier source, independamment des autres jeux.
-Un seul volume de moins de 2 GB devient un fichier .7z. Les archives decoupees
-gardent .7z.001, .002, etc. Un seul volume de 2 GB exactement garde .7z.001.
+Un seul volume de moins de 2000 MiB devient un fichier .7z. Les archives decoupees
+gardent .7z.001, .002, etc. Un seul volume de 2000 MiB exactement garde .7z.001.
 Le dernier volume est plus petit si necessaire. Le dossier source est inclus.
 
 TAILLE ET COMPRESSION
-Maximum par fichier : 2 GB = 2 000 000 000 octets.
-Il s'agit de GB decimaux (base 1000), pas de Gio (base 1024).
+Maximum par fichier : 2000 MiB = 2 097 152 000 octets.
+Il s'agit de Mio/MiB binaires (1 Mio = 1 048 576 octets).
 Compression fixee a Normale (niveau 5), sans option a choisir.
 La fenetre affiche deux barres : le pourcentage 7-Zip du dossier en cours et
 l'avancement total. Les barres avancent pendant la compression,

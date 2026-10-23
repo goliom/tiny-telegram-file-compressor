@@ -2,7 +2,7 @@
 
 # Tiny Telegram File Compressor
 
-**Compress folders into separate multipart 7z archives, with a 2 GB limit per part, or extract archives recursively.**
+**Compress folders into separate multipart 7z archives, with a 2000 MiB limit per part, or extract archives recursively.**
 
 A Windows desktop utility for preparing files to share on Telegram. Choose folders from different drives, follow progress and estimated remaining time, and extract ZIP, RAR and 7z collections from a single interface.
 
@@ -34,8 +34,10 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 - Matching output names and sizes are skipped; different sizes receive `_1`, `_2`, etc. Conversion uses JPG quality 95 and a white background for transparency. Animated AVIF uses its first frame. Size matching does not compare image contents.
 
 - One independent 7z archive set per selected folder, including all its contents and subfolders.
-- Parts limited to **2 GB (2,000,000,000 bytes)** each: decimal GB, not GiB. Compression is fixed to **Normal**.
-- A single volume smaller than 2 GB is saved as `.7z`; multipart archives use `.7z.001`, `.7z.002`, etc.
+- Parts limited to **2000 MiB (2,097,152,000 bytes)** each: binary MiB (1 MiB = 1,048,576 bytes). Compression is fixed to **Normal**.
+
+  Telegram Desktop displays a full part as **2,000 MB**. This fixed limit follows the [documented free-account configuration](https://core.telegram.org/api/config#upload_max_fileparts_default); Telegram supplies its actual limits to clients at runtime.
+- A single volume smaller than 2000 MiB is saved as `.7z`; multipart archives use `.7z.001`, `.7z.002`, etc.
 - Add folders from different drives or add all direct subfolders of a parent folder.
 - Checkbox list with folder names, locations, sizes and processing status.
 - Separate **Compress** and **Extract** tabs, each organized into three steps.
@@ -60,7 +62,7 @@ The Windows executable includes Python, Tk and Pillow with AVIF support; users d
 
 ### Windows executable
 
-1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.2.0-windows-x64.zip`.
+1. Open [Releases](https://github.com/goliom/tiny-telegram-file-compressor/releases) and download `TinyTelegramFileCompressor-v1.2.1-windows-x64.zip`.
 2. Extract the ZIP and install 7-Zip if needed.
 3. Run `TinyTelegramFileCompressor.exe`.
 4. Select a language from the top-right menu. The initial interface is French.
@@ -97,7 +99,7 @@ Collection A.7z.002
 Collection B.7z
 ```
 
-A single volume smaller than 2 GB uses the `.7z` extension and opens directly with 7-Zip. Larger archives are split into numbered parts; the last part is smaller when necessary. Keep all parts together and open `.7z.001` with 7-Zip to extract the set. A single volume exactly 2 GB keeps its numbered name.
+A single volume smaller than 2000 MiB uses the `.7z` extension and opens directly with 7-Zip. Larger archives are split into numbered parts; the last part is smaller when necessary. Keep all parts together and open `.7z.001` with 7-Zip to extract the set. A single volume exactly 2000 MiB keeps its numbered name.
 
 The source folder itself is included in its archive. Two selected folders with the same name must be renamed or processed separately into different destinations.
 

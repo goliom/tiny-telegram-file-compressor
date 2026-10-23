@@ -1,4 +1,4 @@
-Tiny Telegram File Compressor v1.2.0 - Windows x64
+Tiny Telegram File Compressor v1.2.1 - Windows x64
 ================================================
 
 1. Extract this ZIP into a normal folder.
@@ -13,10 +13,10 @@ The executable is unsigned.
 
 COMPRESS
 Add folders, check the ones to process, choose a shared destination, then start.
-Each folder gets its own 7z archive set with 2 GB maximum per part and
+Each folder gets its own 7z archive set with 2000 MiB maximum per part and
 Normal compression. Source folders are kept.
-A single volume smaller than 2 GB is named .7z. Split archives keep numbered
-parts (.7z.001, .002, etc.). 2 GB means exactly 2,000,000,000 bytes.
+A single volume smaller than 2000 MiB is named .7z. Split archives keep numbered
+parts (.7z.001, .002, etc.). 2000 MiB means exactly 2,097,152,000 bytes.
 
 EXTRACT
 Choose a root folder. Subfolders and nested archives are scanned automatically.

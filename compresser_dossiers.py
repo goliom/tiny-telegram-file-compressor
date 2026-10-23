@@ -9,7 +9,7 @@ from archive_tools import seven_zip
 from compression_i18n import text
 from sevenzip_runner import run_sevenzip
 
-VOLUME_BYTES = 2 * 1000**3  # 2 decimal GB, passed to 7-Zip as exact bytes.
+VOLUME_BYTES = 2000 * 1024**2  # 2,000 MiB: 4,000 Telegram chunks of 524,288 bytes.
 
 
 def existing_archives(destination, name):
@@ -100,7 +100,7 @@ def launch_gui():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Une archive 7z par dossier, compression Normale, en volumes de 2 GB maximum.')
+    parser = argparse.ArgumentParser(description='Une archive 7z par dossier, compression Normale, en volumes de 2000 MiB maximum.')
     parser.add_argument('dossiers', nargs='*')
     parser.add_argument('--destination')
     parser.add_argument('--apercu', action='store_true')
@@ -113,7 +113,7 @@ def main():
         parser.error('Indiquez --destination si les dossiers ont des parents différents.')
     destination = Path(args.destination).expanduser().resolve() if args.destination else sources[0].parent
     for source in sources:
-        print(f'{source} -> {destination / (source.name + ".7z")} (2 GB maximum par volume, .001/.002 si nécessaire, compression Normale)')
+        print(f'{source} -> {destination / (source.name + ".7z")} (2000 MiB maximum par volume, .001/.002 si nécessaire, compression Normale)')
     if args.apercu:
         return 0
     errors = 0

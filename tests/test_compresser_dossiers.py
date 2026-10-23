@@ -27,8 +27,8 @@ class CompressionTest(unittest.TestCase):
         (folder / 'sub/piece.bin').write_bytes(os.urandom(size))
         return folder
 
-    def test_exact_2_gb_limit(self):
-        self.assertEqual(VOLUME_BYTES, 2_000_000_000)
+    def test_exact_telegram_2000_mib_limit(self):
+        self.assertEqual(VOLUME_BYTES, 2_097_152_000)
 
     def test_four_selected_folders_produce_four_independent_split_archives(self):
         sources = [self.source(f'Collection - 2026-0{month}') for month in range(5, 10)]
@@ -51,7 +51,7 @@ class CompressionTest(unittest.TestCase):
         with patch('compresser_dossiers.run_sevenzip', wraps=run_sevenzip) as runner:
             volumes = compress_folder(source, self.output, self.executable, on_progress=values.append)
         self.assertIn('-mx=5', runner.call_args.args[0])
-        self.assertIn('-v2000000000b', runner.call_args.args[0])
+        self.assertIn('-v2097152000b', runner.call_args.args[0])
         self.assertEqual([path.name for path in volumes], [source.name + '.7z'])
         restored = self.root / 'restored-single'
         subprocess.run([self.executable, 'x', '-y', '-bso0', f'-o{restored}', str(volumes[0])],

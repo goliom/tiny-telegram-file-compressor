@@ -18,7 +18,7 @@ Windows releases are currently unsigned. Our application to the **SignPath Found
 
 **Folder compression**
 
-![Compression in progress with folder selection, progress bars and estimated remaining time. Personal folder names and paths are hidden.](assets/screenshot-compression.png)
+![Compression in progress with example folder names, progress bars, estimated remaining time and the nine-language menu.](assets/screenshot-compression.png)
 
 **Archive extraction and language selection**
 
